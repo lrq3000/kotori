@@ -10,7 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -32,7 +32,7 @@ import com.melnykov.fab.FloatingActionButton;
 import java.util.Locale;
 
 
-public class MainActivity extends ActionBarActivity implements LocationListener, GpsStatus.Listener {
+public class MainActivity extends AppCompatActivity implements LocationListener, GpsStatus.Listener {
 
     private SharedPreferences  sharedPreferences;
     private LocationManager mLocationManager;

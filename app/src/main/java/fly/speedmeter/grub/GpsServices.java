@@ -1,10 +1,12 @@
 package fly.speedmeter.grub;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.GpsStatus;
 import android.location.GpsStatus.Listener;
 import android.location.Location;
@@ -13,6 +15,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 public class GpsServices extends Service implements LocationListener, GpsStatus.Listener {
@@ -40,6 +43,11 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
         updateNotification(false);
 
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
         mLocationManager.addGpsStatusListener( this);
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0, this);
     }

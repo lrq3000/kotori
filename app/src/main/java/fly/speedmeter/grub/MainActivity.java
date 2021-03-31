@@ -1,8 +1,10 @@
 package fly.speedmeter.grub;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.Location;
@@ -10,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.os.Bundle;
@@ -24,24 +27,24 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
-import com.gc.materialdesign.widgets.Dialog;
+//import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+//import com.gc.materialdesign.widgets.Dialog;
 import com.google.gson.Gson;
-import com.melnykov.fab.FloatingActionButton;
+//import com.melnykov.fab.FloatingActionButton;
 
 import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements LocationListener, GpsStatus.Listener {
 
-    private SharedPreferences  sharedPreferences;
+    private SharedPreferences sharedPreferences;
     private LocationManager mLocationManager;
     private static Data data;
 
     private Toolbar toolbar;
-    private FloatingActionButton fab;
-    private FloatingActionButton refresh;
-    private ProgressBarCircularIndeterminate progressBarCircularIndeterminate;
+    //private FloatingActionButton fab;
+    //private FloatingActionButton refresh;
+    //private ProgressBarCircularIndeterminate progressBarCircularIndeterminate;
     private TextView satellite;
     private TextView status;
     private TextView accuracy;
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private Data.OnGpsServiceUpdate onGpsServiceUpdate;
 
     private boolean firstfix;
+
+    private static final String[] locationPermission = {Manifest.permission.ACCESS_FINE_LOCATION};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +71,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //setTitle("");
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
+        //fab = (FloatingActionButton) findViewById(R.id.fab);
+        //fab.setVisibility(View.INVISIBLE);
 
-        refresh = (FloatingActionButton) findViewById(R.id.refresh);
-        refresh.setVisibility(View.INVISIBLE);
+        //refresh = (FloatingActionButton) findViewById(R.id.refresh);
+        //refresh.setVisibility(View.INVISIBLE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, locationPermission, 1337);
+            return;
+        }
 
         onGpsServiceUpdate = new Data.OnGpsServiceUpdate() {
             @Override
@@ -78,9 +88,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 double maxSpeedTemp = data.getMaxSpeed();
                 double distanceTemp = data.getDistance();
                 double averageTemp;
-                if (sharedPreferences.getBoolean("auto_average", false)){
+                if (sharedPreferences.getBoolean("auto_average", false)) {
                     averageTemp = data.getAverageSpeedMotion();
-                }else{
+                } else {
                     averageTemp = data.getAverageSpeed();
                 }
 
@@ -126,36 +136,37 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         distance = (TextView) findViewById(R.id.distance);
         time = (Chronometer) findViewById(R.id.time);
         currentSpeed = (TextView) findViewById(R.id.currentSpeed);
-        progressBarCircularIndeterminate = (ProgressBarCircularIndeterminate) findViewById(R.id.progressBarCircularIndeterminate);
+        //progressBarCircularIndeterminate = (ProgressBarCircularIndeterminate) findViewById(R.id.progressBarCircularIndeterminate);
 
         time.setText("00:00:00");
         time.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             boolean isPair = true;
+
             @Override
             public void onChronometerTick(Chronometer chrono) {
                 long time;
-                if(data.isRunning()){
-                    time= SystemClock.elapsedRealtime() - chrono.getBase();
+                if (data.isRunning()) {
+                    time = SystemClock.elapsedRealtime() - chrono.getBase();
                     data.setTime(time);
-                }else{
+                } else {
                     time = data.getTime();
                 }
 
-                int h   = (int)(time /3600000);
-                int m = (int)(time  - h*3600000)/60000;
-                int s= (int)(time  - h*3600000 - m*60000)/1000 ;
-                String hh = h < 10 ? "0"+h: h+"";
-                String mm = m < 10 ? "0"+m: m+"";
-                String ss = s < 10 ? "0"+s: s+"";
-                chrono.setText(hh+":"+mm+":"+ss);
+                int h = (int) (time / 3600000);
+                int m = (int) (time - h * 3600000) / 60000;
+                int s = (int) (time - h * 3600000 - m * 60000) / 1000;
+                String hh = h < 10 ? "0" + h : h + "";
+                String mm = m < 10 ? "0" + m : m + "";
+                String ss = s < 10 ? "0" + s : s + "";
+                chrono.setText(hh + ":" + mm + ":" + ss);
 
-                if (data.isRunning()){
-                    chrono.setText(hh+":"+mm+":"+ss);
+                if (data.isRunning()) {
+                    chrono.setText(hh + ":" + mm + ":" + ss);
                 } else {
                     if (isPair) {
                         isPair = false;
-                        chrono.setText(hh+":"+mm+":"+ss);
-                    }else{
+                        chrono.setText(hh + ":" + mm + ":" + ss);
+                    } else {
                         isPair = true;
                         chrono.setText("");
                     }
@@ -165,25 +176,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         });
     }
 
-    public void onFabClick(View v){
+    public void onFabClick(View v) {
         if (!data.isRunning()) {
-            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_pause));
+            //fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_pause));
             data.setRunning(true);
             time.setBase(SystemClock.elapsedRealtime() - data.getTime());
             time.start();
             data.setFirstTime(true);
             startService(new Intent(getBaseContext(), GpsServices.class));
-            refresh.setVisibility(View.INVISIBLE);
-        }else{
-            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
+            //refresh.setVisibility(View.INVISIBLE);
+        } else {
+            //fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
             data.setRunning(false);
             status.setText("");
             stopService(new Intent(getBaseContext(), GpsServices.class));
-            refresh.setVisibility(View.VISIBLE);
+            //refresh.setVisibility(View.VISIBLE);
         }
     }
 
-    public void onRefreshClick(View v){
+    public void onRefreshClick(View v) {
         resetData();
         stopService(new Intent(getBaseContext(), GpsServices.class));
     }
@@ -192,15 +203,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     protected void onResume() {
         super.onResume();
         firstfix = true;
-        if (!data.isRunning()){
+        if (!data.isRunning()) {
             Gson gson = new Gson();
             String json = sharedPreferences.getString("data", "");
             data = gson.fromJson(json, Data.class);
         }
-        if (data == null){
+        if (data == null) {
             data = new Data(onGpsServiceUpdate);
-        }else{
+        } else {
             data.setOnGpsServiceUpdate(onGpsServiceUpdate);
+        }
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
         }
 
         if (mLocationManager.getAllProviders().indexOf(LocationManager.GPS_PROVIDER) >= 0) {
@@ -219,8 +235,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @Override
     protected void onPause() {
         super.onPause();
-        mLocationManager.removeUpdates(this);
-        mLocationManager.removeGpsStatusListener(this);
+        if (mLocationManager != null) {
+            mLocationManager.removeUpdates(this);
+            mLocationManager.removeGpsStatusListener(this);
+        }
+
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(data);
@@ -229,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         stopService(new Intent(getBaseContext(), GpsServices.class));
     }
@@ -271,23 +290,23 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 units = "m";
             }
             SpannableString s = new SpannableString(String.format("%.0f %s", acc, units));
-            s.setSpan(new RelativeSizeSpan(0.75f), s.length()-units.length()-1, s.length(), 0);
+            s.setSpan(new RelativeSizeSpan(0.75f), s.length() - units.length() - 1, s.length(), 0);
             accuracy.setText(s);
 
-            if (firstfix){
+            if (firstfix) {
                 status.setText("");
-                fab.setVisibility(View.VISIBLE);
+                //fab.setVisibility(View.VISIBLE);
                 if (!data.isRunning() && !TextUtils.isEmpty(maxSpeed.getText())) {
-                    refresh.setVisibility(View.VISIBLE);
+                    //refresh.setVisibility(View.VISIBLE);
                 }
                 firstfix = false;
             }
-        }else{
+        } else {
             firstfix = true;
         }
 
         if (location.hasSpeed()) {
-            progressBarCircularIndeterminate.setVisibility(View.GONE);
+            //progressBarCircularIndeterminate.setVisibility(View.GONE);
             double speed = location.getSpeed() * 3.6;
             String units;
             if (sharedPreferences.getBoolean("miles_per_hour", false)) { // Convert to MPH
@@ -297,16 +316,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 units = "km/h";
             }
             SpannableString s = new SpannableString(String.format(Locale.ENGLISH, "%.0f %s", speed, units));
-            s.setSpan(new RelativeSizeSpan(0.25f), s.length()-units.length()-1, s.length(), 0);
+            s.setSpan(new RelativeSizeSpan(0.25f), s.length() - units.length() - 1, s.length(), 0);
             currentSpeed.setText(s);
         }
 
     }
 
     @Override
-    public void onGpsStatusChanged (int event) {
+    public void onGpsStatusChanged(int event) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         switch (event) {
             case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+
                 GpsStatus gpsStatus = mLocationManager.getGpsStatus(null);
                 int satsInView = 0;
                 int satsUsed = 0;
@@ -319,12 +342,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 }
                 satellite.setText(String.valueOf(satsUsed) + "/" + String.valueOf(satsInView));
                 if (satsUsed == 0) {
-                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
+                    //fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
                     data.setRunning(false);
                     status.setText("");
                     stopService(new Intent(getBaseContext(), GpsServices.class));
-                    fab.setVisibility(View.INVISIBLE);
-                    refresh.setVisibility(View.INVISIBLE);
+                    //fab.setVisibility(View.INVISIBLE);
+                    //refresh.setVisibility(View.INVISIBLE);
                     accuracy.setText("");
                     status.setText(getResources().getString(R.string.waiting_for_fix));
                     firstfix = true;
@@ -342,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     }
 
     public void showGpsDisabledDialog(){
-        Dialog dialog = new Dialog(this, getResources().getString(R.string.gps_disabled), getResources().getString(R.string.please_enable_gps));
+        /*Dialog dialog = new Dialog(this, getResources().getString(R.string.gps_disabled), getResources().getString(R.string.please_enable_gps));
 
         dialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
             @Override
@@ -350,12 +373,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
             }
         });
-        dialog.show();
+        dialog.show();*/
     }
 
     public void resetData(){
-        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
-        refresh.setVisibility(View.INVISIBLE);
+        //fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
+        //refresh.setVisibility(View.INVISIBLE);
         time.stop();
         maxSpeed.setText("");
         averageSpeed.setText("");

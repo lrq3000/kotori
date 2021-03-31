@@ -26,15 +26,6 @@
         android:background="@color/red"
         android:elevation="5dp">
 
-        <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
-            android:id="@+id/progressBarCircularIndeterminate"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:elevation="10dp"
-            android:background="@color/white"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
-
         <TextView
             android:id="@+id/currentSpeed"
             android:text=""
@@ -48,37 +39,6 @@
             android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
-
-
-
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fab"
-        android:onClick="onFabClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_play"
-        android:layout_gravity="center_horizontal"
-        fab:fab_colorNormal="@color/blue"
-        fab:fab_colorPressed="@color/blue_light"
-        fab:fab_colorRipple="@color/blue_dark"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"/>
-
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/refresh"
-        android:onClick="onRefreshClick"
-        fab:fab_type="mini"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_refresh"
-        android:layout_gravity="center_horizontal"
-        fab:fab_colorNormal="@color/blue"
-        fab:fab_colorPressed="@color/blue_light"
-        fab:fab_colorRipple="@color/blue_dark"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:layout_above="@+id/fab" />
 
     <TextView
         android:id="@+id/titleMaxSpeed"

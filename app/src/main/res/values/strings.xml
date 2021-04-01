@@ -27,7 +27,7 @@
     <string name="donate_summary">Click in order to support my work :) …</string>
     <string name="source_code">Source code</string>
     <string name="source_code_summary">Access to the source code.</string>
-    <string name="version">Speedmeter Version</string>
+    <string name="version">Version</string>
 
     <string name="noti_id" translatable="false">Speedmeterisanid</string>
     <string name="github" translatable="false">https://gitlab.com/isseigx/kotori</string>

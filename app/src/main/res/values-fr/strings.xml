@@ -27,6 +27,6 @@
     <string name="donate_summary">Cliquez pour soutenir mon travail… :)</string>
     <string name="source_code">Code source</string>
     <string name="source_code_summary">Accès au code source.</string>
-    <string name="version">Version de Speedmeter</string>
+    <string name="version">Version</string>
 
 </resources>

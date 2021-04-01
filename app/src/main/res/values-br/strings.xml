@@ -27,7 +27,7 @@
     <string name="donate_summary">Clique para apoiar meu trabalho :) …</string>
     <string name="source_code">Código fonte</string>
     <string name="source_code_summary">Acesso ao código fonte.</string>
-    <string name="version">Versão do Speedmeter</string>
+    <string name="version">Versão</string>
 
     <string name="noti_id" translatable="false">Speedmeterisanid</string>
     <string name="license_type" translatable="false">GNU General Public License 2</string>

@@ -1,6 +1,7 @@
 package fly.speedmeter.grub;
 
 import android.os.Bundle;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,6 +31,12 @@ public class Settings extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.pref_general, rootKey);
+            
+            Preference preference = findPreference("version");
+            
+            if (preference != null) {
+                preference.setSummary(BuildConfig.VERSION_NAME);
+            }
         }
     }
 }

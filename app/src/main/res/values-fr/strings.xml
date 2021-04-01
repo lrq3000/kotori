@@ -25,7 +25,7 @@
     <string name="license">Licence</string>
     <string name="donate">Faire un don</string>
     <string name="donate_summary">Cliquez pour soutenir mon travail… :)</string>
-    <string name="source_code">GitHub</string>
+    <string name="source_code">Code source</string>
     <string name="source_code_summary">Accès au code source.</string>
     <string name="version">Version de Speedmeter</string>
 

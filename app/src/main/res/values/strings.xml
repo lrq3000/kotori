@@ -25,12 +25,11 @@
     <string name="license">License</string>
     <string name="donate">Donate</string>
     <string name="donate_summary">Click in order to support my work :) …</string>
-    <string name="source_code">GitHub</string>
+    <string name="source_code">Source code</string>
     <string name="source_code_summary">Access to the source code.</string>
     <string name="version">Speedmeter Version</string>
 
     <string name="noti_id" translatable="false">Speedmeterisanid</string>
-    <string name="github" translatable="false">https://github.com/flyingrub/SpeedMeter</string>
+    <string name="github" translatable="false">https://gitlab.com/isseigx/kotori</string>
     <string name="license_type" translatable="false">GNU General Public License 2</string>
-    <string name="doante_url" translatable="false">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=6DE8SFMJKRVK2</string>
 </resources>

@@ -25,7 +25,7 @@
     <string name="license">Lisans</string>
     <string name="donate">Bağış</string>
     <string name="donate_summary">Desteklemek için tıkla :) …</string>
-    <string name="source_code">GitHub</string>
+    <string name="source_code">Kaynak kodu</string>
     <string name="source_code_summary">Kaynak koduna buradan ulaşabilirsin.</string>
     <string name="version">Uygulama Sürümü</string>
 </resources>

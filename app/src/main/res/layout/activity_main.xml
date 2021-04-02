@@ -22,7 +22,7 @@
         android:layout_height="140dp"
         android:layout_below="@+id/toolbar"
         android:layout_gravity="center"
-        android:background="@color/red"
+        android:background="@color/primaryColor"
         android:elevation="5dp">
 
         <TextView
@@ -285,7 +285,7 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:layout_marginTop="16dp"
-        android:textColor="@color/grey_light"
+        android:textColor="@color/grey_lighter"
         android:layout_below="@+id/separator6"
         android:layout_centerHorizontal="true" />
 

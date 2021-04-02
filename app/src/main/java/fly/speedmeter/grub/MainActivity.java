@@ -25,8 +25,7 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
-//import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
-//import com.gc.materialdesign.widgets.Dialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 //import com.melnykov.fab.FloatingActionButton;
 
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private static Data data;
 
     private Toolbar toolbar;
-    //private FloatingActionButton fab;
+    private FloatingActionButton fab;
     //private FloatingActionButton refresh;
     //private ProgressBarCircularIndeterminate progressBarCircularIndeterminate;
     private TextView satellite;
@@ -69,8 +68,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //setTitle("");
-        //fab = (FloatingActionButton) findViewById(R.id.fab);
-        //fab.setVisibility(View.INVISIBLE);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
 
         //refresh = (FloatingActionButton) findViewById(R.id.refresh);
         //refresh.setVisibility(View.INVISIBLE);
@@ -176,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     public void onFabClick(View v) {
         if (!data.isRunning()) {
-            //fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_pause));
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_pause));
             data.setRunning(true);
             time.setBase(SystemClock.elapsedRealtime() - data.getTime());
             time.start();
@@ -184,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             startService(new Intent(getBaseContext(), GpsServices.class));
             //refresh.setVisibility(View.INVISIBLE);
         } else {
-            //fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
             data.setRunning(false);
             status.setText("");
             stopService(new Intent(getBaseContext(), GpsServices.class));
@@ -297,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
             if (firstfix) {
                 status.setText("");
-                //fab.setVisibility(View.VISIBLE);
+                fab.setVisibility(View.VISIBLE);
                 if (!data.isRunning() && !TextUtils.isEmpty(maxSpeed.getText())) {
                     //refresh.setVisibility(View.VISIBLE);
                 }
@@ -344,11 +343,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 }
                 satellite.setText(String.valueOf(satsUsed) + "/" + String.valueOf(satsInView));
                 if (satsUsed == 0) {
-                    //fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
                     data.setRunning(false);
                     status.setText("");
                     stopService(new Intent(getBaseContext(), GpsServices.class));
-                    //fab.setVisibility(View.INVISIBLE);
+                    fab.setVisibility(View.INVISIBLE);
                     //refresh.setVisibility(View.INVISIBLE);
                     accuracy.setText("");
                     status.setText(getResources().getString(R.string.waiting_for_fix));
@@ -379,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     }
 
     public void resetData(){
-        //fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
+        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
         //refresh.setVisibility(View.INVISIBLE);
         time.stop();
         maxSpeed.setText("");

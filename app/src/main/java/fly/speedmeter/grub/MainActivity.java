@@ -296,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
             if (firstfix) {
                 status.setText("");
-                fab.setVisibility(View.VISIBLE);
+                fab.show();
                 if (!data.isRunning() && !TextUtils.isEmpty(maxSpeed.getText())) {
                     //refresh.setVisibility(View.VISIBLE);
                 }
@@ -347,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     data.setRunning(false);
                     status.setText("");
                     stopService(new Intent(getBaseContext(), GpsServices.class));
-                    fab.setVisibility(View.INVISIBLE);
+                    fab.hide();
                     //refresh.setVisibility(View.INVISIBLE);
                     accuracy.setText("");
                     status.setText(getResources().getString(R.string.waiting_for_fix));

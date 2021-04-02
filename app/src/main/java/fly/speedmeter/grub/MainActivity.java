@@ -27,7 +27,6 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
-//import com.melnykov.fab.FloatingActionButton;
 
 import java.util.Locale;
 
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
-    //private FloatingActionButton refresh;
+    private FloatingActionButton refresh;
     //private ProgressBarCircularIndeterminate progressBarCircularIndeterminate;
     private TextView satellite;
     private TextView status;
@@ -71,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.INVISIBLE);
 
-        //refresh = (FloatingActionButton) findViewById(R.id.refresh);
-        //refresh.setVisibility(View.INVISIBLE);
+        refresh = (FloatingActionButton) findViewById(R.id.refresh);
+        refresh.setVisibility(View.INVISIBLE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, locationPermission, 1337);
@@ -181,13 +180,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             time.start();
             data.setFirstTime(true);
             startService(new Intent(getBaseContext(), GpsServices.class));
-            //refresh.setVisibility(View.INVISIBLE);
+            refresh.hide();
         } else {
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
             data.setRunning(false);
             status.setText("");
             stopService(new Intent(getBaseContext(), GpsServices.class));
-            //refresh.setVisibility(View.VISIBLE);
+            refresh.show();
         }
     }
 
@@ -298,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 status.setText("");
                 fab.show();
                 if (!data.isRunning() && !TextUtils.isEmpty(maxSpeed.getText())) {
-                    //refresh.setVisibility(View.VISIBLE);
+                    refresh.show();
                 }
                 firstfix = false;
             }
@@ -348,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     status.setText("");
                     stopService(new Intent(getBaseContext(), GpsServices.class));
                     fab.hide();
-                    //refresh.setVisibility(View.INVISIBLE);
+                    refresh.hide();
                     accuracy.setText("");
                     status.setText(getResources().getString(R.string.waiting_for_fix));
                     firstfix = true;
@@ -379,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     public void resetData(){
         fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
-        //refresh.setVisibility(View.INVISIBLE);
+        refresh.hide();
         time.stop();
         maxSpeed.setText("");
         averageSpeed.setText("");

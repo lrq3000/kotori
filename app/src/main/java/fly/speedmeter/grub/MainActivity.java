@@ -2,6 +2,7 @@ package fly.speedmeter.grub;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
@@ -365,15 +367,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     }
 
     public void showGpsDisabledDialog(){
-        /*Dialog dialog = new Dialog(this, getResources().getString(R.string.gps_disabled), getResources().getString(R.string.please_enable_gps));
-
-        dialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
-            }
-        });
-        dialog.show();*/
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(getResources().getString(R.string.gps_disabled))
+                .setMessage(getResources().getString(R.string.please_enable_gps))
+                .setPositiveButton(getResources().getString(R.string.accept), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
+                    }
+                })
+                .show();
     }
 
     public void resetData(){

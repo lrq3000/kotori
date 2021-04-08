@@ -6,7 +6,7 @@
     android:keepScreenOn="true">
 
     <androidx.appcompat.widget.Toolbar
-        style="@style/ToolBarStyle"
+        style="@style/Theme.MyApplication.AppBarOverlay"
         android:id="@+id/toolbar"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

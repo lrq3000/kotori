@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private FloatingActionButton refresh;
     //private ProgressBarCircularIndeterminate progressBarCircularIndeterminate;
     private TextView satellite;
-    private TextView status;
     private TextView accuracy;
     private TextView currentSpeed;
     private TextView maxSpeed;
@@ -54,8 +53,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private Data.OnGpsServiceUpdate onGpsServiceUpdate;
 
     private boolean firstfix;
-
-    private static final String[] locationPermission = {Manifest.permission.ACCESS_FINE_LOCATION};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         refresh.setVisibility(View.INVISIBLE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, locationPermission, 1337);
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1337);
             return;
         }
 
@@ -127,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         satellite = (TextView) findViewById(R.id.satellite);
-        status = (TextView) findViewById(R.id.status);
         accuracy = (TextView) findViewById(R.id.accuracy);
         maxSpeed = (TextView) findViewById(R.id.maxSpeed);
         averageSpeed = (TextView) findViewById(R.id.averageSpeed);
@@ -186,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         } else {
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
             data.setRunning(false);
-            status.setText("");
+            toolbar.setTitle(R.string.app_name);
             stopService(new Intent(getBaseContext(), GpsServices.class));
             refresh.show();
         }
@@ -296,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             accuracy.setText(s);
 
             if (firstfix) {
-                status.setText("");
+                toolbar.setTitle(R.string.app_name);
                 fab.show();
                 if (!data.isRunning() && !TextUtils.isEmpty(maxSpeed.getText())) {
                     refresh.show();
@@ -346,12 +342,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 if (satsUsed == 0) {
                     fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
                     data.setRunning(false);
-                    status.setText("");
+                    toolbar.setTitle(R.string.app_name);
                     stopService(new Intent(getBaseContext(), GpsServices.class));
                     fab.hide();
                     refresh.hide();
                     accuracy.setText("");
-                    status.setText(getResources().getString(R.string.waiting_for_fix));
+                    toolbar.setTitle(R.string.waiting_for_fix);
                     firstfix = true;
                 }
                 break;

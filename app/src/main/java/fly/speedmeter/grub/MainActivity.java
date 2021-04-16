@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
-    private FloatingActionButton refresh;
+    private Menu optionsMenu;
     //private ProgressBarCircularIndeterminate progressBarCircularIndeterminate;
     private TextView satellite;
     private TextView accuracy;
@@ -65,12 +65,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //setTitle("");
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.INVISIBLE);
-
-        refresh = (FloatingActionButton) findViewById(R.id.refresh);
-        refresh.setVisibility(View.INVISIBLE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1337);
@@ -178,17 +175,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             time.start();
             data.setFirstTime(true);
             startService(new Intent(getBaseContext(), GpsServices.class));
-            refresh.hide();
+            optionsMenu.findItem(R.id.action_refresh).setVisible(false);
+
         } else {
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
             data.setRunning(false);
             toolbar.setTitle(R.string.app_name);
             stopService(new Intent(getBaseContext(), GpsServices.class));
-            refresh.show();
+            optionsMenu.findItem(R.id.action_refresh).setVisible(true);
         }
     }
 
-    public void onRefreshClick(View v) {
+    public void onRefreshClick() {
         resetData();
         stopService(new Intent(getBaseContext(), GpsServices.class));
     }
@@ -256,24 +254,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        optionsMenu = menu;
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, Settings.class);
-            startActivity(intent);
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                onRefreshClick();
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, Settings.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -295,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 toolbar.setTitle(R.string.app_name);
                 fab.show();
                 if (!data.isRunning() && !TextUtils.isEmpty(maxSpeed.getText())) {
-                    refresh.show();
+                    optionsMenu.findItem(R.id.action_refresh).setVisible(true);
                 }
                 firstfix = false;
             }
@@ -345,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     toolbar.setTitle(R.string.app_name);
                     stopService(new Intent(getBaseContext(), GpsServices.class));
                     fab.hide();
-                    refresh.hide();
+                    optionsMenu.findItem(R.id.action_refresh).setVisible(false);
                     accuracy.setText("");
                     toolbar.setTitle(R.string.waiting_for_fix);
                     firstfix = true;
@@ -377,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     public void resetData(){
         fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
-        refresh.hide();
+        optionsMenu.findItem(R.id.action_refresh).setVisible(false);
         time.stop();
         maxSpeed.setText("");
         averageSpeed.setText("");

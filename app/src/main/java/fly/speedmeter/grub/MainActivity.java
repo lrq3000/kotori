@@ -104,15 +104,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     }
                 }
 
-                SpannableString s = new SpannableString(String.format("%.0f %s", maxSpeedTemp, speedUnits));
+                SpannableString s = new SpannableString(getString(R.string.max_speed, maxSpeedTemp, speedUnits));
                 s.setSpan(new RelativeSizeSpan(0.5f), s.length() - speedUnits.length() - 1, s.length(), 0);
                 maxSpeed.setText(s);
 
-                s = new SpannableString(String.format("%.0f %s", averageTemp, speedUnits));
+                s = new SpannableString(getString(R.string.average_speed, averageTemp, speedUnits));
                 s.setSpan(new RelativeSizeSpan(0.5f), s.length() - speedUnits.length() - 1, s.length(), 0);
                 averageSpeed.setText(s);
 
-                s = new SpannableString(String.format("%.3f %s", distanceTemp, distanceUnits));
+                s = new SpannableString(getString(R.string.distance, distanceTemp, distanceUnits));
                 s.setSpan(new RelativeSizeSpan(0.5f), s.length() - distanceUnits.length() - 1, s.length(), 0);
                 distance.setText(s);
             }
@@ -120,51 +120,47 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
+        boolean imperial = sharedPreferences.getBoolean("miles_per_hour", false);
+
+        String speedUnits = (imperial ? "mi/h" : "km/h");
+        String lengthUnits = (imperial ? "mi" : "m");
+
+        SpannableString s = new SpannableString(getString(R.string.max_speed, 0.0f, speedUnits));
+        s.setSpan(new RelativeSizeSpan(0.5f), s.length() - speedUnits.length() - 1, s.length(), 0);
+
         satellite = (TextView) findViewById(R.id.satellite);
         accuracy = (TextView) findViewById(R.id.accuracy);
+
         maxSpeed = (TextView) findViewById(R.id.maxSpeed);
+        maxSpeed.setText(s);
+
+        s = new SpannableString(getString(R.string.average_speed, 0.0f, speedUnits));
+        s.setSpan(new RelativeSizeSpan(0.5f), s.length() - speedUnits.length() - 1, s.length(), 0);
+
         averageSpeed = (TextView) findViewById(R.id.averageSpeed);
+        averageSpeed.setText(s);
+
+        s = new SpannableString(getString(R.string.distance, 0.0f, lengthUnits));
+        s.setSpan(new RelativeSizeSpan(0.5f), s.length() - lengthUnits.length() - 1, s.length(), 0);
+
         distance = (TextView) findViewById(R.id.distance);
+        distance.setText(s);
+
+        s = new SpannableString(getString(R.string.accuracy, 0.0f, lengthUnits));
+        s.setSpan(new RelativeSizeSpan(0.5f), s.length() - lengthUnits.length() - 1, s.length(), 0);
+
+        accuracy.setText(s);
+
         time = (Chronometer) findViewById(R.id.time);
+        time.setFormat(getString(R.string.time));
+        time.setBase(SystemClock.elapsedRealtime());
+
+        s = new SpannableString(String.format("%.0f %s", 0.0f, speedUnits));
+        s.setSpan(new RelativeSizeSpan(0.25f), s.length() - speedUnits.length() - 1, s.length(), 0);
+
         currentSpeed = (TextView) findViewById(R.id.currentSpeed);
+        currentSpeed.setText(s);
         //progressBarCircularIndeterminate = (ProgressBarCircularIndeterminate) findViewById(R.id.progressBarCircularIndeterminate);
-
-        time.setText("00:00:00");
-        time.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            boolean isPair = true;
-
-            @Override
-            public void onChronometerTick(Chronometer chrono) {
-                long time;
-                if (data.isRunning()) {
-                    time = SystemClock.elapsedRealtime() - chrono.getBase();
-                    data.setTime(time);
-                } else {
-                    time = data.getTime();
-                }
-
-                int h = (int) (time / 3600000);
-                int m = (int) (time - h * 3600000) / 60000;
-                int s = (int) (time - h * 3600000 - m * 60000) / 1000;
-                String hh = h < 10 ? "0" + h : h + "";
-                String mm = m < 10 ? "0" + m : m + "";
-                String ss = s < 10 ? "0" + s : s + "";
-                chrono.setText(hh + ":" + mm + ":" + ss);
-
-                if (data.isRunning()) {
-                    chrono.setText(hh + ":" + mm + ":" + ss);
-                } else {
-                    if (isPair) {
-                        isPair = false;
-                        chrono.setText(hh + ":" + mm + ":" + ss);
-                    } else {
-                        isPair = true;
-                        chrono.setText("");
-                    }
-                }
-
-            }
-        });
     }
 
     public void onFabClick(View v) {
@@ -180,6 +176,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         } else {
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
             data.setRunning(false);
+            data.setTime(SystemClock.elapsedRealtime() - time.getBase());
+            time.stop();
             toolbar.setTitle(R.string.app_name);
             stopService(new Intent(getBaseContext(), GpsServices.class));
             optionsMenu.findItem(R.id.action_refresh).setVisible(true);
@@ -283,14 +281,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             } else {
                 units = "m";
             }
-            SpannableString s = new SpannableString(String.format("%.0f %s", acc, units));
+
+            SpannableString s = new SpannableString(getString(R.string.accuracy, acc, units));
             s.setSpan(new RelativeSizeSpan(0.75f), s.length() - units.length() - 1, s.length(), 0);
             accuracy.setText(s);
 
             if (firstfix) {
                 toolbar.setTitle(R.string.app_name);
                 fab.show();
-                if (!data.isRunning() && !TextUtils.isEmpty(maxSpeed.getText())) {
+                if (!data.isRunning() && data.getMaxSpeed() != 0) {
                     optionsMenu.findItem(R.id.action_refresh).setVisible(true);
                 }
                 firstfix = false;
@@ -309,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             } else {
                 units = "km/h";
             }
-            SpannableString s = new SpannableString(String.format(Locale.ENGLISH, "%.0f %s", speed, units));
+            SpannableString s = new SpannableString(String.format("%.0f %s", speed, units));
             s.setSpan(new RelativeSizeSpan(0.25f), s.length() - units.length() - 1, s.length(), 0);
             currentSpeed.setText(s);
         }
@@ -334,7 +333,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                         satsUsed++;
                     }
                 }
-                satellite.setText(String.valueOf(satsUsed) + "/" + String.valueOf(satsInView));
+
+                satellite.setText(getString(R.string.satellite, String.valueOf(satsUsed), String.valueOf(satsInView)));
                 if (satsUsed == 0) {
                     fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
                     data.setRunning(false);
@@ -342,7 +342,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     stopService(new Intent(getBaseContext(), GpsServices.class));
                     fab.hide();
                     optionsMenu.findItem(R.id.action_refresh).setVisible(false);
-                    accuracy.setText("");
+
+                    accuracy.setText(getString(R.string.accuracy, 0.0f,
+                                    sharedPreferences.getBoolean("miles_per_hour", false) ? "ft" : "m"));
+
                     toolbar.setTitle(R.string.waiting_for_fix);
                     firstfix = true;
                 }
@@ -375,10 +378,23 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
         optionsMenu.findItem(R.id.action_refresh).setVisible(false);
         time.stop();
-        maxSpeed.setText("");
-        averageSpeed.setText("");
-        distance.setText("");
-        time.setText("00:00:00");
+
+        String speedUnits = sharedPreferences.getBoolean("miles_per_hour", false) ? "mi/h" : "km/h";
+        String lengthUnits = sharedPreferences.getBoolean("miles_per_hour", false) ? "mi" : "m";
+
+        SpannableString s = new SpannableString(getString(R.string.max_speed, 0.0f, speedUnits));
+        s.setSpan(new RelativeSizeSpan(0.5f), s.length() - speedUnits.length() - 1, s.length(), 0);
+        maxSpeed.setText(s);
+
+        s = new SpannableString(getString(R.string.average_speed, 0.0f, speedUnits));
+        s.setSpan(new RelativeSizeSpan(0.5f), s.length() - speedUnits.length() - 1, s.length(), 0);
+        averageSpeed.setText(s);
+
+        s = new SpannableString(getString(R.string.distance, 0.0f, lengthUnits));
+        s.setSpan(new RelativeSizeSpan(0.5f), s.length() - lengthUnits.length() - 1, s.length(), 0);
+        distance.setText(s);
+
+        time.setBase(SystemClock.elapsedRealtime());
         data = new Data(onGpsServiceUpdate);
     }
 

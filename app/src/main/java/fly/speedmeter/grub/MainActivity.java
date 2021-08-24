@@ -30,9 +30,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
-import java.util.Locale;
-
-
 public class MainActivity extends AppCompatActivity implements LocationListener, GpsStatus.Listener {
 
     private SharedPreferences sharedPreferences;

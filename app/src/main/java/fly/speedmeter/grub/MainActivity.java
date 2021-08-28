@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 s.setSpan(new RelativeSizeSpan(0.5f), s.length() - speedUnits.length() - 1, s.length(), 0);
                 averageSpeed.setText(s);
 
-                s = new SpannableString(getString(R.string.distance, distanceTemp, distanceUnits));
+                s = new SpannableString(String.format("%.03f %s", distanceTemp, distanceUnits));
                 s.setSpan(new RelativeSizeSpan(0.5f), s.length() - distanceUnits.length() - 1, s.length(), 0);
                 distance.setText(s);
             }
@@ -137,11 +137,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         averageSpeed = (TextView) findViewById(R.id.averageSpeed);
         averageSpeed.setText(s);
 
-        s = new SpannableString(getString(R.string.distance, 0.0f, lengthUnits));
-        s.setSpan(new RelativeSizeSpan(0.5f), s.length() - lengthUnits.length() - 1, s.length(), 0);
-
         distance = (TextView) findViewById(R.id.distance);
-        distance.setText(s);
+        distance.setText("---");
 
         s = new SpannableString(getString(R.string.accuracy, 0.0f, lengthUnits));
         s.setSpan(new RelativeSizeSpan(0.5f), s.length() - lengthUnits.length() - 1, s.length(), 0);
@@ -149,7 +146,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         accuracy.setText(s);
 
         time = (Chronometer) findViewById(R.id.time);
-        time.setFormat(getString(R.string.time));
         time.setBase(SystemClock.elapsedRealtime());
 
         s = new SpannableString(String.format("%.0f %s", 0.0f, speedUnits));
@@ -387,9 +383,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         s.setSpan(new RelativeSizeSpan(0.5f), s.length() - speedUnits.length() - 1, s.length(), 0);
         averageSpeed.setText(s);
 
-        s = new SpannableString(getString(R.string.distance, 0.0f, lengthUnits));
-        s.setSpan(new RelativeSizeSpan(0.5f), s.length() - lengthUnits.length() - 1, s.length(), 0);
-        distance.setText(s);
+        distance.setText("---");
 
         time.setBase(SystemClock.elapsedRealtime());
         data = new Data(onGpsServiceUpdate);

@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Брзиномер</string>
-
     <string name="max_speed">Макс. брзина</string>
     <string name="average_speed">Просечна брзина</string>
     <string name="distance">Пређени пут</string>

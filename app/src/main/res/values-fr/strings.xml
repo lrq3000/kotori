@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Speedmeter</string>
-
     <string name="max_speed">Vitesse Max</string>
     <string name="average_speed">Vitesse Moyenne</string>
     <string name="distance">Distance</string>

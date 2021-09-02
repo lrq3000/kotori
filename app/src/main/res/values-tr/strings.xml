@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Speedmeter</string>
-
     <string name="max_speed">En Yüksek Hız</string>
     <string name="average_speed">Ortalama Hız</string>
     <string name="distance">Mesafe</string>

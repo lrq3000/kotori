@@ -28,7 +28,4 @@
     <string name="source_code">Código fonte</string>
     <string name="source_code_summary">Acesso ao código fonte.</string>
     <string name="version">Versão</string>
-
-    <string name="noti_id" translatable="false">Speedmeterisanid</string>
-    <string name="license_type" translatable="false">GNU General Public License 2</string>
 </resources>

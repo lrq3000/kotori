@@ -32,5 +32,5 @@
 
     <string name="noti_id" translatable="false">Speedmeterisanid</string>
     <string name="github" translatable="false">https://gitlab.com/isseigx/kotori</string>
-    <string name="license_type" translatable="false">GNU General Public License 2</string>
+    <string name="license_type" translatable="false">GNU General Public License 3</string>
 </resources>

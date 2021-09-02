@@ -83,7 +83,7 @@
 
         <TextView
             android:id="@+id/maxSpeed"
-            android:text=""
+            android:text="@string/max_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -122,6 +122,55 @@
             android:textSize="17sp"
             app:layout_constraintTop_toBottomOf="@id/accuracy"
             app:layout_constraintStart_toStartOf="@id/accuracy"/>
+
+        <!-- Text views for data -->
+        <TextView
+            android:id="@+id/maxSpeedData"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/divider1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"/>
+
+        <TextView
+            android:id="@+id/averageSpeedData"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/maxSpeedData"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"/>
+
+        <TextView
+            android:id="@+id/accuracyData"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="17sp"
+            app:layout_constraintTop_toBottomOf="@id/averageSpeedData"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"/>
+
+        <TextView
+            android:id="@+id/satelliteData"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="17sp"
+            app:layout_constraintTop_toBottomOf="@id/accuracyData"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

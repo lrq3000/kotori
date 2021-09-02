@@ -30,7 +30,7 @@
     <string name="source_code_summary">Access to the source code.</string>
     <string name="version">Version</string>
 
-    <string name="noti_id" translatable="false">Speedmeterisanid</string>
+    <string name="noti_id" translatable="false">kotoriid</string>
     <string name="github" translatable="false">https://gitlab.com/isseigx/kotori</string>
     <string name="license_type" translatable="false">GNU General Public License 3</string>
 </resources>

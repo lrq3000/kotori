@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Брзиномер</string>
 
-    <string name="max_speed">Макс. брзина: %1$.0f %2$s</string>
-    <string name="average_speed">Просечна брзина: %1$.0f %2$s</string>
-    <string name="distance">Пређени пут: %1$.03f %2$s</string>
-    <string name="time">Време: %s</string>
-    <string name="accuracy">Прецизност: %1$.0f %2$s</string>
-    <string name="satellite">Сателити: %1$s/%2$s</string>
+    <string name="max_speed">Макс. брзина</string>
+    <string name="average_speed">Просечна брзина</string>
+    <string name="distance">Пређени пут</string>
+    <string name="time">Време</string>
+    <string name="accuracy">Прецизност</string>
+    <string name="satellite">Сателити</string>
 
     <string name="waiting_for_fix">Чекам на ГПС…</string>
     <string name="gps_disabled">ГПС искључен</string>

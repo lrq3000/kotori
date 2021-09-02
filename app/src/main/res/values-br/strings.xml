@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Speedmeter</string>
 
-    <string name="max_speed">Velocidade Máxima: %1$.0f %2$s</string>
-    <string name="average_speed">Velocidade Média: %1$.0f %2$s</string>
-    <string name="distance">Distância: %1$.03f %2$s</string>
-    <string name="time">Tempo: %s</string>
-    <string name="accuracy">Precisão: %1$.0f %2$s</string>
-    <string name="satellite">Satélites: %1$s/%2$s</string>
+    <string name="max_speed">Velocidade Máxima</string>
+    <string name="average_speed">Velocidade Média</string>
+    <string name="distance">Distância</string>
+    <string name="time">Tempo</string>
+    <string name="accuracy">Precisão</string>
+    <string name="satellite">Satélites</string>
 
     <string name="waiting_for_fix">Aguardando ajuste do GPS …</string>
     <string name="gps_disabled">GPS desabilitado</string>

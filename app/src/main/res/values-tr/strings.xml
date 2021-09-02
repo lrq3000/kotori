@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Speedmeter</string>
 
-    <string name="max_speed">En Yüksek Hız: %1$.0f %2$s</string>
-    <string name="average_speed">Ortalama Hız: %1$.0f %2$s</string>
-    <string name="distance">Mesafe: %1$.03f %2$s</string>
-    <string name="time">Zaman: %s</string>
-    <string name="accuracy">Hassasiyet: %1$.0f %2$s</string>
-    <string name="satellite">Kullanılan Uydular: %1$s/%2$s</string>
+    <string name="max_speed">En Yüksek Hız</string>
+    <string name="average_speed">Ortalama Hız</string>
+    <string name="distance">Mesafe</string>
+    <string name="time">Zaman</string>
+    <string name="accuracy">Hassasiyet</string>
+    <string name="satellite">Kullanılan Uydular</string>
 
     <string name="waiting_for_fix">Konum Sinyali Alınıyor…</string>
     <string name="gps_disabled">Konum Devre Dışı</string>

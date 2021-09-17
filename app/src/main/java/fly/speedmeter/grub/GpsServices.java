@@ -15,6 +15,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationChannelCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 public class GpsServices extends Service implements LocationListener, GpsStatus.Listener {
     private LocationManager mLocationManager;
@@ -37,6 +40,8 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         contentIntent = PendingIntent.getActivity(
                 this, 0, notificationIntent, 0);
+
+        createNotificationChannel();
 
         updateNotification(false);
 
@@ -86,19 +91,34 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
     }
 
     public void updateNotification(boolean asData){
-        Notification.Builder builder = new Notification.Builder(getBaseContext())
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "kotori")
                 .setContentTitle(getString(R.string.running))
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(contentIntent);
 
         if(asData){
-            builder.setContentText(String.format(getString(R.string.notification), data.getMaxSpeed(), data.getDistance()));
+            builder.setContentText(getString(R.string.notification, data.getMaxSpeed(), data.getDistance()));
         }else{
-            builder.setContentText(String.format(getString(R.string.notification), '-', '-'));
+            builder.setContentText(getString(R.string.notification, 0.0f, 0.0f));
         }
         Notification notification = builder.build();
         startForeground(R.string.noti_id, notification);
     }
+    
+    void createNotificationChannel() {
+        //TODO: move to string values
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannelCompat.Builder channelBuilder = new NotificationChannelCompat.Builder("kotori", 
+                                                NotificationManagerCompat.IMPORTANCE_DEFAULT)
+                                                .setName("Kotori")
+                                                .setDescription("Kotori Notifications");
+
+            NotificationChannelCompat channel = channelBuilder.build();
+
+            NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
+            manager.createNotificationChannel(channel);
+        }
+    } 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

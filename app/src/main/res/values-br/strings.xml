@@ -11,7 +11,7 @@
     <string name="please_enable_gps">Para utilizar este aplicativo, é necessário que o GPS esteja habilitado.</string>
 
     <string name="running">Rota em processo…</string>
-    <string name="notification">Velocidade Máx : %1$s, Distância : %2$s.</string>
+    <string name="notification">Velocidade Máx : %1$.0f, Distância : %2$.0f.</string>
 
     <string name="settings">Configurações</string>
     <string name="app_info">Sobre este app</string>

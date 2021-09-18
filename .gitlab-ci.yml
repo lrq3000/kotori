@@ -1,5 +1,5 @@
 include:
-    - template: Android.latest.gilab-ci.yml
+    - template: /Android.latest.gilab-ci.yml
 
 assembleDebug:
     rules:

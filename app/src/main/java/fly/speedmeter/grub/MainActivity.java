@@ -16,7 +16,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
+//import androidx.appcompat.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity implements LocationListener, GpsStatus.Listener {
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private LocationManager mLocationManager;
     private static Data data;
 
-    private Toolbar toolbar;
+    private MaterialToolbar toolbar;
     private FloatingActionButton fab;
     private Menu optionsMenu;
     //private ProgressBarCircularIndeterminate progressBarCircularIndeterminate;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
         sharedPreferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (MaterialToolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);

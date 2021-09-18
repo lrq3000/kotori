@@ -123,9 +123,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         String speedUnits = (imperial ? "mi/h" : "km/h");
         String lengthUnits = (imperial ? "mi" : "m");
 
-        SpannableString s = new SpannableString(getString(R.string.max_speed, 0.0f, speedUnits));
-        s.setSpan(new RelativeSizeSpan(0.5f), s.length() - speedUnits.length() - 1, s.length(), 0);
-
         satellite = (TextView) findViewById(R.id.satelliteData);
         accuracy = (TextView) findViewById(R.id.accuracyData);
 
@@ -139,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         time = (Chronometer) findViewById(R.id.time);
         time.setBase(SystemClock.elapsedRealtime());
 
-        s = new SpannableString(String.format("%.0f %s", 0.0f, speedUnits));
+        SpannableString s = new SpannableString(String.format("%.0f %s", 0.0f, speedUnits));
         s.setSpan(new RelativeSizeSpan(0.25f), s.length() - speedUnits.length() - 1, s.length(), 0);
 
         currentSpeed = (TextView) findViewById(R.id.currentSpeed);

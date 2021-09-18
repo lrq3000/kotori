@@ -143,5 +143,9 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
+# lint
+lint/
+app/lint/
+
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio
 

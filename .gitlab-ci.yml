@@ -1,5 +1,5 @@
 include:
-    - template: /Android.latest.gilab-ci.yml
+    remote: 'https://gitlab.com/gitlab-org/gitlab/-/raw/master/lib/gitlab/ci/templates/Android.gitlab-ci.yml'
 
 assembleDebug:
     rules:

@@ -8,8 +8,8 @@ android {
         applicationId "dev.melonpan.kotori"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 24
-        versionName "2.3.1"
+        versionCode 25
+        versionName "3.0.0"
     }
 
     lintOptions {

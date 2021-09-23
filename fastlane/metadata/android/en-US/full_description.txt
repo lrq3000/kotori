@@ -1,0 +1,18 @@
+Kotori obtains the GPS data from device sensors.
+
+Currently the data showed is:
+
+<ul>
+<li>Current speed</li>
+<li>Distance</li>
+<li>Average speed</li>
+<li>Maximum speed</li>
+<li>GPS accuracy</li>
+<li>Used and available satellites</li>
+<li>And more...</li>
+</ul>
+
+Note that Kotori does not require any internet connection but may is necessary to assist the GPS.
+This means some data is shared with Google if the device uses Google Play Services.
+
+This is a fork of <a href="https://f-droid.org/es/packages/fly.speedmeter.grub/">Speedmeter</a>

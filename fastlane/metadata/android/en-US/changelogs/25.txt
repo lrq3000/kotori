@@ -1,0 +1,10 @@
+<b>Kotori 3.0.0</b>
+
+First fork release
+
+<ul>
+<li>Port to androidX</li>
+<li>Use Material Components</li>
+<li>Cosmetic changes (icons, colors, ui elements position)</li>
+<li>Night mode (android 10+)</li>
+</ul>

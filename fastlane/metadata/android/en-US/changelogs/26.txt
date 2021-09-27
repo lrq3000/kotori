@@ -1,0 +1,5 @@
+<b>Kotori 3.0.1</b>
+
+<ul>
+<li>Update gradle wrapper</li>
+</ul>

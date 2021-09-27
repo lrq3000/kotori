@@ -1,3 +1,6 @@
+## Kotori 3.0.1
+- Update gradle wrapper
+
 ## Kotori 3.0.0
 
 First fork release

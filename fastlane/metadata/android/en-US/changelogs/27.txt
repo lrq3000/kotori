@@ -1,0 +1,8 @@
+<b>Kotori 3.0.2</b>
+
+Emergency release
+
+<ul>
+<li>Fix: Application does not completly start after grant location permision</li>
+<li>Update gradle again</li>
+</ul>

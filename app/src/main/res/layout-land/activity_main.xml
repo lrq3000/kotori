@@ -130,7 +130,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
             android:textSize="20sp"
-            app:layout_constraintTop_toTopOf="@id/parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_chainStyle="spread"/>
 

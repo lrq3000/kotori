@@ -14,10 +14,11 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
-import androidx.core.app.ActivityCompat;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationChannelCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.PermissionChecker;
 
 public class GpsServices extends Service implements LocationListener, GpsStatus.Listener {
     private LocationManager mLocationManager;
@@ -47,7 +48,10 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
 
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PermissionChecker.PERMISSION_GRANTED
+            && PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PermissionChecker.PERMISSION_GRANTED) {
             return;
         }
 

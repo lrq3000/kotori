@@ -9,6 +9,7 @@ public class Data {
     private long timeStopped;
     private boolean isFirstTime;
 
+    private double accuracy;
     private double distanceM;
     private double curSpeed;
     private double maxSpeed;
@@ -112,6 +113,14 @@ public class Data {
 
     public void setTime(long time) {
         this.time = time;
+    }
+    
+    public double getAccuracy() {
+        return accuracy;
+    }
+    
+    public void setAccuracy(double acc) {
+        accuracy = acc;
     }
 }
 

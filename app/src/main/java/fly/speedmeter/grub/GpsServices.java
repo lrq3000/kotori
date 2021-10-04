@@ -11,7 +11,7 @@ import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
+//import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 
@@ -86,7 +86,13 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
             if (location.hasSpeed()) {
                 data.setCurSpeed(location.getSpeed() * 3.6);
                 if(location.getSpeed() == 0){
-                    new isStillStopped().execute();
+                    //new isStillStopped().execute();
+                    if (lastTimeStopped != 0) {
+                        data.setTimeStopped(SystemClock.elapsedRealtime() - lastTimeStopped);
+                    }
+                    lastTimeStopped = SystemClock.elapsedRealtime();
+                } else {
+                    lastTimeStopped = 0;
                 }
             }
             data.update();
@@ -156,7 +162,7 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {}
 
-    class isStillStopped extends AsyncTask<Void, Integer, String> {
+    /*class isStillStopped extends AsyncTask<Void, Integer, String> {
         int timer = 0;
         @Override
         protected String doInBackground(Void... unused) {
@@ -175,5 +181,5 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
         protected void onPostExecute(String message) {
             data.setTimeStopped(timer);
         }
-    }
+    }*/
 }

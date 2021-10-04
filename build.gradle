@@ -19,8 +19,8 @@ allprojects {
         google()
     }
     
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:deprecation"
-        options.deprecation = true
-    }
+    //tasks.withType(JavaCompile) {
+        //options.compilerArgs << "-Xlint:deprecation"
+        //options.deprecation = true
+    //}
 }

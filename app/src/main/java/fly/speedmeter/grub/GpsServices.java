@@ -94,7 +94,12 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
                 } else {
                     lastTimeStopped = 0;
                 }
+            } else {
+                data.setCurSpeed(-1);
             }
+            
+            data.setAccuracy(location.hasAccuracy() ? location.getAccuracy() : -1);
+            
             data.update();
             updateNotification(true);
         }

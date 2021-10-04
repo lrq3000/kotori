@@ -14,6 +14,7 @@ import android.location.LocationManager;
 //import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.SystemClock;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationChannelCompat;
@@ -30,9 +31,10 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
     double currentLat=0 ;
     double lastLon = 0;
     double lastLat = 0;
+    
+    long lastTimeStopped;
 
     PendingIntent contentIntent;
-
 
     @Override
     public void onCreate() {

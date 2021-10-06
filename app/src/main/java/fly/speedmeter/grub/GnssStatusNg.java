@@ -21,7 +21,7 @@ public class GnssStatusNg extends GnssStatus.Callback implements PositioningStat
     }
     
     private void setupObjects() {
-        if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (PermissionChecker.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
             != PermissionChecker.PERMISSION_GRANTED) {
             return;
         }

@@ -23,13 +23,13 @@ public class GpsStatusLegacy implements GpsStatus.Listener, PositioningStatus {
     }
     
     private void setupObjects() {
-        if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (PermissionChecker.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
             != PermissionChecker.PERMISSION_GRANTED) {
             return;
         }
         
         mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-        mLocationManager.registerGnssStatusCallback(mContext.getMainExecutor(), this);
+        mLocationManager.addGpsStatusListener(this);
     }
     
     @Override

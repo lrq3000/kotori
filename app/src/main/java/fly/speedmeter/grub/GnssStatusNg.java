@@ -3,6 +3,9 @@ package fly.speedmeter.grub;
 import android.content.Context;
 import android.location.GnssStatus;
 import android.location.LocationManager;
+import android.Manifest;
+
+import androidx.core.content.PermissionChecker;
 
 public class GnssStatusNg extends GnssStatus.Callback implements PositioningStatus {
     
@@ -18,8 +21,12 @@ public class GnssStatusNg extends GnssStatus.Callback implements PositioningStat
     }
     
     private void setupObjects() {
-        mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+        if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PermissionChecker.PERMISSION_GRANTED) {
+            return;
+        }
         
+        mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         mLocationManager.registerGnssStatusCallback(mContext.getMainExecutor(), this);
     }
     
@@ -66,7 +73,7 @@ public class GnssStatusNg extends GnssStatus.Callback implements PositioningStat
     
     @Override
     public void onStopped() {
-        mEnabled = false;
+        mEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         update();
     }
 }

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.LocationManager;
+import android.Manifest;
+
+import androidx.core.content.PermissionChecker;
 
 public class GpsStatusLegacy implements GpsStatus.Listener, PositioningStatus {
     
@@ -20,9 +23,13 @@ public class GpsStatusLegacy implements GpsStatus.Listener, PositioningStatus {
     }
     
     private void setupObjects() {
-        mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+        if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PermissionChecker.PERMISSION_GRANTED) {
+            return;
+        }
         
-        mLocationManager.addGpsStatusListener(this);
+        mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager.registerGnssStatusCallback(mContext.getMainExecutor(), this);
     }
     
     @Override

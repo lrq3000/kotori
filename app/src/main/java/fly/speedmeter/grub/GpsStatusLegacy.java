@@ -14,11 +14,14 @@ public class GpsStatusLegacy implements GpsStatus.Listener, PositioningStatus {
     int satellitesUsed;
     int satelliteCount;
     
+    Listener mListener;
+    
     private Context mContext;
     private LocationManager mLocationManager;
     
-    public GpsStatusLegacy(Context context) {
+    public GpsStatusLegacy(Context context, Listener listener) {
         mContext = context;
+        mListener = listener;
         setupObjects();
     }
     
@@ -33,8 +36,8 @@ public class GpsStatusLegacy implements GpsStatus.Listener, PositioningStatus {
     }
     
     @Override
-    public boolean enabled() {
-        return mEnabled;
+    public boolean isProviderEnabled() {
+        return mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
     
     @Override
@@ -53,13 +56,23 @@ public class GpsStatusLegacy implements GpsStatus.Listener, PositioningStatus {
     }
     
     @Override
-    public void update() { }
+    public void setListener(Listener listener) {
+        mListener = listener;
+    }
     
     @Override
     public void onGpsStatusChanged(int event) {
+        if (PermissionChecker.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PermissionChecker.PERMISSION_GRANTED) {
+            return;
+        }
+        
         switch (event) {
             case GpsStatus.GPS_EVENT_SATELLITE_STATUS: {
                 GpsStatus status = mLocationManager.getGpsStatus(null);
+                
+                satellitesUsed = 0;
+                satelliteCount = 0;
                 
                 for (GpsSatellite satellite : status.getSatellites()) {
                     satelliteCount++;
@@ -68,14 +81,25 @@ public class GpsStatusLegacy implements GpsStatus.Listener, PositioningStatus {
                         satellitesUsed++;
                     }
                 }
+                
+                if (mListener != null) {
+                    mListener.onStatusChanged(2);
+                }
+                
                 break;
             }
-            case GpsStatus.GPS_EVENT_STOPPED:
-                mEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            case GpsStatus.GPS_EVENT_STOPPED: {
+                if (mListener != null) {
+                    mListener.onStatusChanged(0);
+                }
                 break;
-            case GpsStatus.GPS_EVENT_FIRST_FIX:
+            }
+            case GpsStatus.GPS_EVENT_STARTED: {
+                if (mListener != null) {
+                    mListener.onStatusChanged(1);
+                }
                 break;
-        }
-        update();
+            }
+        }        
     }
 }

@@ -1,13 +1,18 @@
 package fly.speedmeter.grub;
 
 public interface PositioningStatus {
-    boolean enabled();
+    
+    interface Listener {
+        void onStatusChanged(int event);
+    }
+    
+    boolean isProviderEnabled();
     
     int getSatelliteCount();
     
     int getSatellitesUsed();
     
-    void update();
+    void setListener(Listener listener);
     
     void unregister();
 }

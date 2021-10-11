@@ -5,18 +5,23 @@ import android.location.GnssStatus;
 import android.location.LocationManager;
 import android.Manifest;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.content.PermissionChecker;
 
+@RequiresApi(24)
 public class GnssStatusNg extends GnssStatus.Callback implements PositioningStatus {
     
-    boolean mEnabled;
     int satellitesUsed;
     int satelliteCount;
+    
+    Listener mListener;
     
     private Context mContext;
     private LocationManager mLocationManager;
     
-    public GnssStatusNg(Context mContext) {
+    public GnssStatusNg(Context context, Listener listener) {
+        mContext = context;
+        mListener = listener;
         setupObjects();
     }
     
@@ -27,12 +32,13 @@ public class GnssStatusNg extends GnssStatus.Callback implements PositioningStat
         }
         
         mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-        mLocationManager.registerGnssStatusCallback(mContext.getMainExecutor(), this);
+        
+        mLocationManager.registerGnssStatusCallback(this, null);
     }
     
     @Override
-    public boolean enabled() {
-        return mEnabled;
+    public boolean isProviderEnabled() {
+        return mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
     
     @Override
@@ -51,29 +57,37 @@ public class GnssStatusNg extends GnssStatus.Callback implements PositioningStat
     }
     
     @Override
-    public void update() { }
+    public void setListener(Listener listener) {
+        mListener = listener;
+    }
     
     @Override
     public void onSatelliteStatusChanged(GnssStatus status) {
         satelliteCount = status.getSatelliteCount();
+        satellitesUsed = 0;
         
         for (int i = 0; i < satelliteCount; i++) {
             if (status.usedInFix(i)) {
                 satellitesUsed++;
             }
         }
-        update();
+        
+        if (mListener != null) {
+            mListener.onStatusChanged(2);
+        }
     }
     
     @Override
     public void onStarted() {
-        mEnabled = true;
-        update();
+        if (mListener != null) {
+            mListener.onStatusChanged(1);
+        }
     }
     
     @Override
-    public void onStopped() {
-        mEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        update();
+    public void onStopped() {      
+        if (mListener != null) {
+            mListener.onStatusChanged(0);
+        }
     }
 }

@@ -25,13 +25,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.gson.Gson;
 
-public class MainActivity extends AppCompatActivity implements LocationListener, GpsStatus.Listener {
+public class MainActivity extends AppCompatActivity implements LocationListener,
+                                  PositioningStatus.Listener {
 
     private SharedPreferences sharedPreferences;
     private LocationManager mLocationManager;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private TextView distance;
     private Chronometer time;
     private Data.OnGpsServiceUpdate onGpsServiceUpdate;
+    private PositioningStatus mPositioningStatus;
 
     private boolean firstfix;
 
@@ -141,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         currentSpeed = (TextView) findViewById(R.id.currentSpeed);
         currentSpeed.setText(s);
         //progressBarCircularIndeterminate = (ProgressBarCircularIndeterminate) findViewById(R.id.progressBarCircularIndeterminate);
+        
+        createPositioningStatus();
     }
 
     public void onFabClick(View v) {
@@ -199,11 +204,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             Log.w("MainActivity", "No GPS location provider found. GPS data display will not be available.");
         }
 
-        if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        /*if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             showGpsDisabledDialog();
         }
 
-        mLocationManager.addGpsStatusListener(this);
+        mLocationManager.addGpsStatusListener(this);*/
+        
+        createPositioningStatus();
+        
+        if (!mPositioningStatus.isProviderEnabled()) {
+            showGpsDisabledDialog();
+        }
     }
 
     @Override
@@ -211,8 +222,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         super.onPause();
         if (mLocationManager != null) {
             mLocationManager.removeUpdates(this);
-            mLocationManager.removeGpsStatusListener(this);
+            //mLocationManager.removeGpsStatusListener(this);
         }
+        mPositioningStatus.unregister();
 
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
         Gson gson = new Gson();
@@ -295,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     }
 
-    @Override
+    /*@Override
     public void onGpsStatusChanged(int event) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -338,6 +350,43 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 break;
             case GpsStatus.GPS_EVENT_FIRST_FIX:
                 break;
+        }
+    }*/
+    
+    @Override
+    public void onStatusChanged(int event) {
+        
+        switch (event) {
+            case 0: {
+                if (!mPositioningStatus.isProviderEnabled()) {
+                   fab.hide();
+                   data.setRunning(false);
+                   Toast.makeText(getApplicationContext(), getResources().getString(R.string.gps_disabled), Toast.LENGTH_SHORT)
+                   .show();
+                }
+                break;
+            }
+            case 1:
+                break;
+            case 2: {
+                satellite.setText(String.format("%d/%d", mPositioningStatus.getSatellitesUsed(),
+                                        mPositioningStatus.getSatelliteCount()));
+        
+                if (mPositioningStatus.getSatellitesUsed() == 0) {
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_play));
+                    fab.hide();
+                    data.setRunning(false);
+                    stopService(new Intent(getBaseContext(), GpsServices.class));
+                    optionsMenu.findItem(R.id.action_refresh).setVisible(false);
+
+                    accuracy.setText(String.format("%.0f %s", 0.0f,
+                                    sharedPreferences.getBoolean("miles_per_hour", false) ? "ft" : "m"));
+
+                    toolbar.setTitle(R.string.waiting_for_fix);
+                    firstfix = true;
+                }
+                break;
+            }
         }
     }
 
@@ -390,4 +439,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     @Override
     public void onProviderDisabled(String s) {}
+    
+    private void createPositioningStatus() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            mPositioningStatus = new GnssStatusNg(this, this);
+        }
+        else {
+            mPositioningStatus = new GpsStatusLegacy(this, this);
+        }
+    }
 }

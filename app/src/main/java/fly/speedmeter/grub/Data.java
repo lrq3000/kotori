@@ -13,6 +13,10 @@ public class Data {
     private double distanceM;
     private double curSpeed;
     private double maxSpeed;
+    
+    private int satellitesUsed;
+    private int satellites;
+    private boolean providerEnabled;
 
     private OnGpsServiceUpdate onGpsServiceUpdate;
 
@@ -121,6 +125,30 @@ public class Data {
     
     public void setAccuracy(double acc) {
         accuracy = acc;
+    }
+    
+    public int getSatellitesUsed() {
+        return satellitesUsed;
+    }
+    
+    public void setSatellitedUsed(int satUsed) {
+        satellitesUsed = satUsed;
+    }
+    
+    public int getSatellites() {
+        return satellites;
+    }
+    
+    public void setSatellites(int sat) {
+        satellites = sat;
+    }
+    
+    public boolean getProviderEnabled() {
+        return providerEnabled;
+    }
+    
+    public void setProviderEnabled(boolean provEnabled) {
+        providerEnabled = providerEnabled;
     }
 }
 

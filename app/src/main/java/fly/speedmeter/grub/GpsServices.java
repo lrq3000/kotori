@@ -21,11 +21,12 @@ import androidx.core.app.NotificationChannelCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.PermissionChecker;
 
-public class GpsServices extends Service implements LocationListener, GpsStatus.Listener {
+public class GpsServices extends Service implements LocationListener, PositioningStatus.Listener {
     private LocationManager mLocationManager;
 
     Location lastlocation = new Location("last");
     Data data;
+    PositioningStatus mPositioningStatus;
 
     double currentLon=0 ;
     double currentLat=0 ;
@@ -57,8 +58,14 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
             return;
         }
 
-        mLocationManager.addGpsStatusListener( this);
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0, this);
+        
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            mPositioningStatus = new GnssStatusNg(this, this);
+        }
+        else {
+            mPositioningStatus = new GpsStatusLegacy(this, this);
+        }
     }
 
     @Override
@@ -153,22 +160,30 @@ public class GpsServices extends Service implements LocationListener, GpsStatus.
     @Override
     public void onDestroy() {
         mLocationManager.removeUpdates(this);
-        mLocationManager.removeGpsStatusListener(this);
+        mPositioningStatus.unregister();
         stopForeground(true);
     }
-
+    
     @Override
-    public void onGpsStatusChanged(int event) {}
-
-    @Override
-    public void onProviderDisabled(String provider) {}
-   
-    @Override
-    public void onProviderEnabled(String provider) {}
-   
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {}
-
+    public void onStatusChanged(int event) {
+        switch (event) {
+            case 0: {
+                if (!mPositioningStatus.isProviderEnabled()) {
+                    data.setRunning(false);
+                }
+                break;
+            }
+            case 1:
+                break;
+            default: {
+                data.setSatellitedUsed(mPositioningStatus.getSatellitesUsed());
+                data.setSatellites(mPositioningStatus.getSatellitesUsed());
+            }
+        }
+        data.setProviderEnabled(mPositioningStatus.isProviderEnabled());
+        data.update();
+    }
+        
     /*class isStillStopped extends AsyncTask<Void, Integer, String> {
         int timer = 0;
         @Override

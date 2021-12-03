@@ -108,7 +108,8 @@ public class GpsServices extends Service implements LocationListener, Positionin
             }
             
             data.setAccuracy(location.hasAccuracy() ? location.getAccuracy() : -1);
-            
+            data.setAltitude(location.hasAltitude() ? location.getAltitude() : -1);
+
             data.update();
             updateNotification(true);
         }

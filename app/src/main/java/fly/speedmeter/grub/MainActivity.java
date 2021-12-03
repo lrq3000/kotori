@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 s.setSpan(new RelativeSizeSpan(0.5f), s.length() - speedUnits.length() - 1, s.length(), 0);
                 averageSpeed.setText(s);
 
-                s = new SpannableString(String.format("%.03f %s", distanceTemp, distanceUnits));
+                s = new SpannableString(String.format("%.02f %s", distanceTemp, distanceUnits));
                 s.setSpan(new RelativeSizeSpan(0.5f), s.length() - distanceUnits.length() - 1, s.length(), 0);
                 distance.setText(s);
             }

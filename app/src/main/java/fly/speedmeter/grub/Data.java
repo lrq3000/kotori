@@ -13,6 +13,7 @@ public class Data {
     private double distanceM;
     private double curSpeed;
     private double maxSpeed;
+    private double altitude;
     
     private int satellitesUsed;
     private int satellites;
@@ -150,5 +151,12 @@ public class Data {
     public void setProviderEnabled(boolean provEnabled) {
         providerEnabled = providerEnabled;
     }
+    
+    public void setAltitude(double altitude) {
+        this.altitude = altitude;
+    }
+    
+    public double getAltitude() {
+        return altitude;
+    }
 }
-

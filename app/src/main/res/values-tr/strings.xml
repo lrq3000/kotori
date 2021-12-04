@@ -5,6 +5,7 @@
     <string name="time">Zaman</string>
     <string name="accuracy">Hassasiyet</string>
     <string name="satellite">Kullanılan Uydular</string>
+    <string name="altitude">İrtifa</string>
 
     <string name="waiting_for_fix">Konum Sinyali Alınıyor…</string>
     <string name="gps_disabled">Konum Devre Dışı</string>

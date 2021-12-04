@@ -5,6 +5,7 @@
     <string name="time">Tempo</string>
     <string name="accuracy">Precisão</string>
     <string name="satellite">Satélites</string>
+    <string name="altitude">Altitude</string>
 
     <string name="waiting_for_fix">Aguardando ajuste do GPS …</string>
     <string name="gps_disabled">GPS desabilitado</string>

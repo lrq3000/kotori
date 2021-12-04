@@ -5,6 +5,7 @@
     <string name="time">Време</string>
     <string name="accuracy">Прецизност</string>
     <string name="satellite">Сателити</string>
+    <string name="altitude">Надморска височина</string>
 
     <string name="waiting_for_fix">Чекам на ГПС…</string>
     <string name="gps_disabled">ГПС искључен</string>

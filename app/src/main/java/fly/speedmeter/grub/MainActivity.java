@@ -77,30 +77,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         onGpsServiceUpdate = new Data.OnGpsServiceUpdate() {
             @Override
             public void update() {
+                boolean autoAverage = sharedPreferences.getBoolean("auto_average", false);
+                boolean imperial = sharedPreferences.getBoolean("miles_per_hour", false);
+                
                 double maxSpeedTemp = data.getMaxSpeed();
                 double distanceTemp = data.getDistance();
-                double averageTemp;
-                if (sharedPreferences.getBoolean("auto_average", false)) {
-                    averageTemp = data.getAverageSpeedMotion();
-                } else {
-                    averageTemp = data.getAverageSpeed();
-                }
+                                
+                double averageTemp = (autoAverage ? data.getAverageSpeedMotion() :
+                                                   data.getAverageSpeed());
 
-                String speedUnits;
-                String distanceUnits;
-                if (sharedPreferences.getBoolean("miles_per_hour", false)) {
+                String speedUnits = (imperial ? "mi/h" : "km/h");
+                String distanceUnits = (imperial ? "mi" :
+                                                   (distanceTemp <= 1000.0 ? "m" : "km"));
+                if (imperial) {
                     maxSpeedTemp *= 0.62137119;
                     distanceTemp = distanceTemp / 1000.0 * 0.62137119;
                     averageTemp *= 0.62137119;
-                    speedUnits = "mi/h";
-                    distanceUnits = "mi";
                 } else {
-                    speedUnits = "km/h";
-                    if (distanceTemp <= 1000.0) {
-                        distanceUnits = "m";
-                    } else {
+                    if (distanceTemp >= 1000.0) {
                         distanceTemp /= 1000.0;
-                        distanceUnits = "km";
                     }
                 }
 

@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private TextView maxSpeed;
     private TextView averageSpeed;
     private TextView distance;
+    private TextView altitude;
     private Chronometer time;
     private Data.OnGpsServiceUpdate onGpsServiceUpdate;
     private PositioningStatus mPositioningStatus;
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 
                 double maxSpeedTemp = data.getMaxSpeed();
                 double distanceTemp = data.getDistance();
+                double altitudeTemp = (imperial ? data.getAltitude() * 3.28084 :
+                                        data.getAltitude());
                                 
                 double averageTemp = (autoAverage ? data.getAverageSpeedMotion() :
                                                    data.getAverageSpeed());
@@ -110,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 s = new SpannableString(String.format("%.02f %s", distanceTemp, distanceUnits));
                 s.setSpan(new RelativeSizeSpan(0.5f), s.length() - distanceUnits.length() - 1, s.length(), 0);
                 distance.setText(s);
+                
+                altitude.setText(String.format("%.0f %s", altitudeTemp, 
+                                (imperial ? "ft" : "m")));
             }
         };
 
@@ -138,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
         currentSpeed = (TextView) findViewById(R.id.currentSpeed);
         currentSpeed.setText(s);
+        
+        altitude = (TextView) findViewById(R.id.altitudeData);
         //progressBarCircularIndeterminate = (ProgressBarCircularIndeterminate) findViewById(R.id.progressBarCircularIndeterminate);
         
         createPositioningStatus();
@@ -299,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             s.setSpan(new RelativeSizeSpan(0.25f), s.length() - units.length() - 1, s.length(), 0);
             currentSpeed.setText(s);
         }
-
+        
     }
 
     /*@Override
@@ -407,6 +415,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         averageSpeed.setText("");
 
         distance.setText("---");
+        
+        altitude.setText("");
 
         time.stop();
         time.setBase(SystemClock.elapsedRealtime());

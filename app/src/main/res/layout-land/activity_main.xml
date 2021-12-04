@@ -120,6 +120,16 @@
             android:textSize="17sp"
             app:layout_constraintTop_toBottomOf="@id/accuracy"
             app:layout_constraintStart_toStartOf="@id/accuracy"/>
+            
+        <TextView
+            android:id="@+id/altitude"
+            android:text="@string/altitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="17sp"
+            app:layout_constraintTop_toBottomOf="@id/satellite"
+            app:layout_constraintStart_toStartOf="@id/satellite"/>
 
         <!-- Text views for data -->
         <TextView
@@ -165,6 +175,17 @@
             android:layout_marginTop="8dp"
             android:textSize="17sp"
             app:layout_constraintTop_toBottomOf="@id/accuracyData"
+            app:layout_constraintEnd_toEndOf="parent"/>
+            
+        <TextView
+            android:id="@+id/altitudeData"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="17sp"
+            app:layout_constraintTop_toBottomOf="@id/satelliteData"
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

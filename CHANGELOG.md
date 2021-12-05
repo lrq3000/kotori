@@ -1,3 +1,9 @@
+## Kotori 3.1.0
+
+- Show location altitude
+- Use GNSS API on devices running android 7 or above (Migrate to androidX in future release)
+- Code clean up (refactor, deprecated APIs...)
+
 ## Kotori 3.0.2
 
 Emergency release

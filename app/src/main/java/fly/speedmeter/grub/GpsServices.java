@@ -28,8 +28,8 @@ public class GpsServices extends Service implements LocationListener, Positionin
     Data data;
     PositioningStatus mPositioningStatus;
 
-    double currentLon=0 ;
-    double currentLat=0 ;
+    double currentLon=  0;
+    double currentLat = 0;
     double lastLon = 0;
     double lastLat = 0;
     
@@ -184,25 +184,5 @@ public class GpsServices extends Service implements LocationListener, Positionin
         data.setProviderEnabled(mPositioningStatus.isProviderEnabled());
         data.update();
     }
-        
-    /*class isStillStopped extends AsyncTask<Void, Integer, String> {
-        int timer = 0;
-        @Override
-        protected String doInBackground(Void... unused) {
-            try {
-                while (data.getCurSpeed() == 0) {
-                    Thread.sleep(1000);
-                    timer++;
-                }
-            } catch (InterruptedException t) {
-                return ("The sleep operation failed");
-            }
-            return ("return object when task is finished");
-        }
 
-        @Override
-        protected void onPostExecute(String message) {
-            data.setTimeStopped(timer);
-        }
-    }*/
 }

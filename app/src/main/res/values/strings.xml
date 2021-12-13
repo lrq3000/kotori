@@ -15,7 +15,7 @@
     <string name="accept">Accept</string>
 
     <string name="running">Route in process…</string>
-    <string name="notification">Max Speed : %1$.0f, Distance : %2$.0f.</string>
+    <string name="notification">Speed: %1$.0f, Distance: %2$.0f.</string>
 
     <string name="settings">Settings</string>
     <string name="app_info">About this app</string>

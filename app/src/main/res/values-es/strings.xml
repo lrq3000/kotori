@@ -13,7 +13,7 @@
     <string name="accept">Aceptar</string>
 
     <string name="running">Ruta en progreso…</string>
-    <string name="notification">Velocidad máxima : %1$.0f, Distancia : %2$.0f.</string>
+    <string name="notification">Velocidad: %1$.0f, Distancia: %2$.0f.</string>
 
     <string name="settings">Configuraciones</string>
     <string name="app_info">Acerca de esta aplicación</string>

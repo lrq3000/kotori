@@ -12,7 +12,7 @@
     <string name="please_enable_gps">Uygulamayı Kullanmak İçin Konumunuz Açık Olmalı.</string>
 
     <string name="running">Rota Hesaplanıyor…</string>
-    <string name="notification">En Yüksek Hız : %1$.0f, Mesafe : %2$.0f.</string>
+    <string name="notification">Hız: %1$.0f, Mesafe: %2$.0f.</string>
 
     <string name="settings">Ayarlar</string>
     <string name="app_info">Uygulama Hakkında</string>

@@ -122,7 +122,7 @@ public class GpsServices extends Service implements LocationListener, Positionin
                 .setContentIntent(contentIntent);
 
         if(asData){
-            builder.setContentText(getString(R.string.notification, data.getMaxSpeed(), data.getDistance()));
+            builder.setContentText(getString(R.string.notification, data.getCurSpeed(), data.getDistance()));
         }else{
             builder.setContentText(getString(R.string.notification, 0.0f, 0.0f));
         }

@@ -12,7 +12,7 @@
     <string name="please_enable_gps">Да бисте користили ову апликацију морате укључити ГПС.</string>
 
     <string name="running">Мерење у току…</string>
-    <string name="notification">Макс. брзина: %1$.0f, пређени пут: %2$.0f.</string>
+    <string name="notification">Брзина: %1$.0f, пређени пут: %2$.0f.</string>
 
     <string name="settings">Поставке</string>
     <string name="app_info">О програму</string>

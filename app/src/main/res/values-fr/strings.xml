@@ -12,7 +12,7 @@
     <string name="please_enable_gps">Pour utiliser cette application, le GPS doit être activé.</string>
 
     <string name="running">Parcours en cours…</string>
-    <string name="notification">Vitesse Max : %1$.0f, Distance : %2$.0f.</string>
+    <string name="notification">Vitesse: %1$.0f, Distance: %2$.0f.</string>
 
     <string name="settings">Paramètres</string>
     <string name="app_info">À propos</string>

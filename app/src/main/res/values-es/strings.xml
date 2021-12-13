@@ -1,0 +1,31 @@
+<resources>
+    <string name="max_speed">Velocidad Máxima</string>
+    <string name="average_speed">Velocidad Promedio</string>
+    <string name="distance">Distancia</string>
+    <string name="time">Tiempo</string>
+    <string name="accuracy">Precisión</string>
+    <string name="satellite">Satélites</string>
+    <string name="altitude">Altitud</string>
+
+    <string name="waiting_for_fix">Esperando corrección de GPS ...</string>
+    <string name="gps_disabled">GPS deshabilitado</string>
+    <string name="please_enable_gps">Para usar esta aplicación, el GPS debe estar habilitado</string>
+    <string name="accept">Aceptar</string>
+
+    <string name="running">Ruta en progreso…</string>
+    <string name="notification">Velocidad máxima : %1$.0f, Distancia : %2$.0f.</string>
+
+    <string name="settings">Configuraciones</string>
+    <string name="app_info">Acerca de esta aplicación</string>
+    <string name="pref_auto_average">Detectar automáticamente el tiempo de parada</string>
+    <string name="pref_auto_average_summary">El tiempo de las paradas se reflejará en la velocidad promedio.</string>
+    <string name="pref_miles_per_hour">Usar millas por hora</string>
+    <string name="pref_miles_per_hour_summary">Mostrar la velocidad en mi/h en lugar de km/h.</string>
+
+    <string name="license">Licencia</string>
+    <string name="donate">Donar</string>
+    <string name="donate_summary">Hacer click para apoyar mi trabajo :) …</string>
+    <string name="source_code">Código fuente</string>
+    <string name="source_code_summary">Acceder al código fuente.</string>
+    <string name="version">Versión</string>
+</resources>

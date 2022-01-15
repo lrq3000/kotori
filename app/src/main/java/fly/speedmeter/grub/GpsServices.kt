@@ -105,8 +105,12 @@ class GpsServices : Service(), LocationListenerCompat {
     }
 
     override fun onDestroy() {
-        LocationManagerCompat.unregisterGnssStatusCallback(mLocationManager, mGnssCallback)
-        LocationManagerCompat.removeUpdates(mLocationManager, this)
+        if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PermissionChecker.PERMISSION_GRANTED) {
+            LocationManagerCompat.unregisterGnssStatusCallback(mLocationManager, mGnssCallback)
+            LocationManagerCompat.removeUpdates(mLocationManager, this)
+        }
+
         stopForeground(true)
     }
 

@@ -16,6 +16,7 @@
     <string name="notification">Velocidad: %1$.0f, Distancia: %2$.0f.</string>
 
     <string name="settings">Configuraciones</string>
+    <string name="exit">Salir</string>
     <string name="app_info">Acerca de esta aplicación</string>
     <string name="pref_auto_average">Detectar automáticamente el tiempo de parada</string>
     <string name="pref_auto_average_summary">El tiempo de las paradas se reflejará en la velocidad promedio.</string>

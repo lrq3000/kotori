@@ -10,8 +10,9 @@ import android.os.Bundle
 import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
-import android.os.SystemClock
+import android.os.Process
 import android.os.RemoteException
+import android.os.SystemClock
 import android.text.format.DateUtils
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
@@ -92,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mSharedPreferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+        mSharedPreferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
         tvSatelliteData = findViewById(R.id.satelliteData)
 
@@ -153,14 +154,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
 
-        if (bound) {
-            if (mService != null) {
-                sendMessage(Message.obtain(null, UNREGISTER))
-            }
-
-            unbindService(mConnection)
-            bound = false
-        }
+        unboundService()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -173,6 +167,10 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_refresh -> {
                 sendMessage(Message.obtain(null, RESET))
+                return true
+            }
+            R.id.action_exit -> {
+                exitApplication()
                 return true
             }
             R.id.action_settings -> {
@@ -397,6 +395,27 @@ class MainActivity : AppCompatActivity() {
         }
 
         return avgSpeed
+    }
+
+    fun unboundService() {
+        if (bound) {
+            if (mService != null) {
+                sendMessage(Message.obtain(null, UNREGISTER))
+            }
+
+            unbindService(mConnection)
+            bound = false
+        }
+    }
+
+    fun exitApplication() {
+        unboundService()
+
+        Intent(applicationContext, GpsServices::class.java).also { intent ->
+            stopService(intent)
+        }
+
+        finish()
     }
 
 }

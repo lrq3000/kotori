@@ -59,7 +59,7 @@
             app:layout_constraintEnd_toStartOf="@id/time"
             app:layout_constraintTop_toBottomOf="@id/currentSpeed"/>
 
-        <Chronometer
+        <TextView
             android:id="@+id/time"
             android:drawableLeft="@drawable/baseline_timer_24"
             android:text="@string/time"
@@ -67,7 +67,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textSize="20sp"
-            android:textColor="?android:attr/textColorSecondary"
             app:layout_constraintStart_toEndOf="@id/distance"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/currentSpeed"/>

@@ -97,11 +97,6 @@ class GpsServices : Service(), LocationListenerCompat {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent != null) {
-            if (intent.action == "stop") {
-                stopSelf()
-            }
-        }
         return START_STICKY
     }
 
@@ -241,17 +236,10 @@ class GpsServices : Service(), LocationListenerCompat {
     }
 
     fun updateNotification(hasData: Boolean) {
-        val stopIntent = Intent(this, GpsServices::class.java).apply {
-            action = "stop"
-        }
-
-        val stopPendingIntent: PendingIntent = PendingIntent.getService(this, 0, stopIntent, 0)
-
         var notificationBuilder = NotificationCompat.Builder(this, "Kotori")
             .setContentTitle(getString(R.string.running))
             .setSmallIcon(R.drawable.ic_notification)
             .setContentIntent(mContentIntent)
-            .addAction(R.drawable.ic_action_pause, "Stop", stopPendingIntent)
 
         if (hasData) {
             notificationBuilder.setContentText(getString(R.string.notification, mData.currentSpeed, mData.distance))

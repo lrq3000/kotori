@@ -21,6 +21,15 @@
     <string name="pref_auto_average_summary">Hareketsiz zamanda geçen süre ortalama hıza katılmaz.</string>
     <string name="pref_miles_per_hour">Mil/saat olarak hesapla</string>
     <string name="pref_miles_per_hour_summary">Hızı km/s yerine mil/s olarak hesaplar.</string>
+    
+    <!-- app theme preference strings -->
+    <string name="theme">Tema</string>
+    
+    <string-array name="themes">
+        <item>Sistem</item>
+        <item>Parlak</item>
+        <item>Karanlık</item>
+    </string-array>
 
     <string name="license">Lisans</string>
     <string name="donate">Bağış</string>

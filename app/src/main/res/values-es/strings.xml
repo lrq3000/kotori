@@ -22,6 +22,15 @@
     <string name="pref_auto_average_summary">El tiempo de las paradas se reflejará en la velocidad promedio.</string>
     <string name="pref_miles_per_hour">Usar millas por hora</string>
     <string name="pref_miles_per_hour_summary">Mostrar la velocidad en mi/h en lugar de km/h.</string>
+    
+    <!-- app theme preference strings -->
+    <string name="theme">Tema</string>
+    
+    <string-array name="themes">
+        <item>Sistema</item>
+        <item>Claro</item>
+        <item>Oscuro</item>
+    </string-array>
 
     <string name="license">Licencia</string>
     <string name="donate">Donar</string>

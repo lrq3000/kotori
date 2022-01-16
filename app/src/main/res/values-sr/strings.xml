@@ -19,6 +19,15 @@
     <string name="app_info">О програму</string>
     <string name="pref_auto_average">Аутоматско откривање заустављања.</string>
     <string name="pref_auto_average_summary">Време проведено у стајању се не узима у обрачун просечне брзине.</string>
+    
+    <!-- app theme preference strings -->
+    <string name="theme">Тема</string>
+    
+    <string-array name="themes">
+        <item>Систем</item>
+        <item>Светао</item>
+        <item>Мрак</item>
+    </string-array>
 
     <string name="license">Лиценца</string>
     <string name="donate">Донације</string>

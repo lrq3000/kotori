@@ -21,6 +21,15 @@
     <string name="pref_auto_average_summary">Le temps passé à l\'arrêt ne comptera pas dans la vitesse moyenne.</string>
     <string name="pref_miles_per_hour">Utiliser les miles par heure</string>
     <string name="pref_miles_per_hour_summary">Afficher la vitesse en mi/h au lieu de km/h</string>
+    
+    <!-- app theme preference strings -->
+    <string name="theme">Thème</string>
+    
+    <string-array name="themes">
+        <item>Système</item>
+        <item>Brillant</item>
+        <item>Foncé</item>
+    </string-array>
 
     <string name="license">Licence</string>
     <string name="donate">Faire un don</string>

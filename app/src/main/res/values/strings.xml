@@ -24,6 +24,23 @@
     <string name="pref_auto_average_summary">The time spent at stop will not count in the average speed.</string>
     <string name="pref_miles_per_hour">Use miles per hour</string>
     <string name="pref_miles_per_hour_summary">Display the speed in mi/h instead of km/h</string>
+    
+    <!-- app theme preference strings -->
+    <string name="theme">Theme</string>
+    
+    <string-array name="themes">
+        <item>System</item>
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+    
+    <string-array name="theme_values" translatable="false">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+    
+    <string name="default_theme" translatable="false">system</string>
 
     <string name="license">License</string>
     <string name="donate">Donate</string>

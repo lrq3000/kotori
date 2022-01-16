@@ -65,8 +65,9 @@ class GpsServices : Service(), LocationListenerCompat {
     private lateinit var mTimer: Timer
 
     override fun onCreate() {
-        mContentIntent = Intent(this, MainActivity::class.java).let { notificationIntent ->
-            PendingIntent.getActivity(this, 0, notificationIntent, 0)
+        mContentIntent = Intent(this, MainActivity::class.java).let { intent ->
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            PendingIntent.getActivity(this, 0, intent, 0)
         }
 
         createNotificationChannel()

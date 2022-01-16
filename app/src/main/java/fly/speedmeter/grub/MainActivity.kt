@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
-import android.os.Process
 import android.os.RemoteException
 import android.os.SystemClock
 import android.text.format.DateUtils
@@ -116,15 +115,11 @@ class MainActivity : AppCompatActivity() {
         fabStart.setOnClickListener {
             if (!isRunning) {
                 fabStart.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_action_pause))
-                //mChronometer.setBase(SystemClock.elapsedRealtime() - time)
-                //mChronometer.start()
                 menuOptions.findItem(R.id.action_refresh).setVisible(false)
                 isRunning = true
             }
             else {
                 fabStart.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_action_play))
-                //time = SystemClock.elapsedRealtime() - mChronometer.getBase()
-                //mChronometer.stop()
                 mToolbar.setTitle(R.string.app_name)
                 menuOptions.findItem(R.id.action_refresh).setVisible(true)
                 isRunning = false

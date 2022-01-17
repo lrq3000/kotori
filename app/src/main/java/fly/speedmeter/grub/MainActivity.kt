@@ -22,6 +22,7 @@ import android.widget.TextView
 import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
 import androidx.core.content.ContextCompat
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fabStart: FloatingActionButton
 
-    private lateinit var menuOptions: Menu
+    private var menuOptions: Menu? = null
 
     private lateinit var mToolbar: MaterialToolbar
 
@@ -115,13 +116,13 @@ class MainActivity : AppCompatActivity() {
         fabStart.setOnClickListener {
             if (!isRunning) {
                 fabStart.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_action_pause))
-                menuOptions.findItem(R.id.action_refresh).setVisible(false)
+                menuOptions?.findItem(R.id.action_refresh)?.setVisible(false)
                 isRunning = true
             }
             else {
                 fabStart.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_action_play))
                 mToolbar.setTitle(R.string.app_name)
-                menuOptions.findItem(R.id.action_refresh).setVisible(true)
+                menuOptions?.findItem(R.id.action_refresh)?.setVisible(true)
                 isRunning = false
             }
             sendMessage(Message.obtain(null, RUNNING_UPDATE, isRunning))
@@ -131,6 +132,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(mToolbar)
 
         tvTime = findViewById(R.id.time)
+        
+        val theme = mSharedPreferences.getString("theme", "system")
+        
+        when (theme) {
+            "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
 
         checkLocationPermission()
     }
@@ -239,7 +247,7 @@ class MainActivity : AppCompatActivity() {
             fabStart.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_action_play))
             fabStart.hide()
 
-            menuOptions.findItem(R.id.action_refresh).setVisible(false)
+            menuOptions?.findItem(R.id.action_refresh)?.setVisible(false)
 
             mToolbar.setTitle(R.string.waiting_for_fix)
         }

@@ -165,9 +165,9 @@ class GpsServices : Service(), LocationListenerCompat {
 
             if (location.speed == 0.0f) {
                 if (lastTimeStopped != 0L) {
-                    mData.timeStopped = SystemClock.elapsedRealtime() - lastTimeStopped
+                    mData.timeStopped = mData.time - lastTimeStopped
                 }
-                lastTimeStopped = SystemClock.elapsedRealtime()
+                lastTimeStopped = mData.time
             }
             else {
                 lastTimeStopped = 0L

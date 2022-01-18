@@ -394,7 +394,7 @@ class MainActivity : AppCompatActivity() {
         val avgSpeed: Float = if (motionTime <= 0.0f) {
             0.0f
         } else {
-            (data_.distance.toFloat() / (motionTime.toFloat() / 1000.0f)) * 3.6f
+            (data_.distance.toFloat() / motionTime.toFloat() * 3.6f)
         }
 
         return avgSpeed

@@ -43,13 +43,13 @@
     <string name="default_theme" translatable="false">system</string>
 
     <string name="license">License</string>
-    <string name="donate">Donate</string>
-    <string name="donate_summary">Click in order to support my work :) …</string>
+    <string name="donate">Buy me a coffee ☕</string>
     <string name="source_code">Source code</string>
     <string name="source_code_summary">Access to the source code.</string>
     <string name="version">Version</string>
 
     <string name="noti_id" translatable="false">kotoriid</string>
     <string name="github" translatable="false">https://gitlab.com/isseigx/kotori</string>
+    <string name="donate_link" translatable="false">https://ko-fi.com/isseigx</string>
     <string name="license_type" translatable="false">GNU General Public License 3</string>
 </resources>

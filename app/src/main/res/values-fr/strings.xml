@@ -32,8 +32,7 @@
     </string-array>
 
     <string name="license">Licence</string>
-    <string name="donate">Faire un don</string>
-    <string name="donate_summary">Cliquez pour soutenir mon travail… :)</string>
+    <string name="donate">Achetez-moi un café ☕</string>
     <string name="source_code">Code source</string>
     <string name="source_code_summary">Accès au code source.</string>
     <string name="version">Version</string>

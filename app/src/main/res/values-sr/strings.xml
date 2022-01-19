@@ -30,8 +30,7 @@
     </string-array>
 
     <string name="license">Лиценца</string>
-    <string name="donate">Донације</string>
-    <string name="donate_summary">Подржите мој рад :) …</string>
+    <string name="donate">Купи ми кафу ☕</string>
     <string name="source_code">Изворни код</string>
     <string name="source_code_summary">Приступ изворном кôду.</string>
     <string name="version">Верзија</string>

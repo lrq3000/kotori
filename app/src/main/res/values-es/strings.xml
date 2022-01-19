@@ -20,8 +20,8 @@
     <string name="app_info">Acerca de esta aplicación</string>
     <string name="pref_auto_average">Detectar automáticamente el tiempo de parada</string>
     <string name="pref_auto_average_summary">El tiempo de las paradas se reflejará en la velocidad promedio.</string>
-    <string name="pref_miles_per_hour">Usar millas por hora</string>
-    <string name="pref_miles_per_hour_summary">Mostrar la velocidad en mi/h en lugar de km/h.</string>
+    <string name="pref_miles_per_hour">Usar unidades imperiales</string>
+    <string name="pref_miles_per_hour_summary">Mostrar datos en unidades imperiales en lugar del sistema metrico.</string>
     
     <!-- app theme preference strings -->
     <string name="theme">Tema</string>

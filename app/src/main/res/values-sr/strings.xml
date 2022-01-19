@@ -19,6 +19,8 @@
     <string name="app_info">О програму</string>
     <string name="pref_auto_average">Аутоматско откривање заустављања.</string>
     <string name="pref_auto_average_summary">Време проведено у стајању се не узима у обрачун просечне брзине.</string>
+    <string name="pref_miles_per_hour">Користите империјалне јединице</string>
+    <string name="pref_miles_per_hour_summary">Приказ података у империјалним јединицама уместо у метричком систему.</string>
     
     <!-- app theme preference strings -->
     <string name="theme">Тема</string>

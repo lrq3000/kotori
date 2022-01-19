@@ -72,7 +72,7 @@ class GpsServices : Service(), LocationListenerCompat {
 
         createNotificationChannel()
 
-        updateNotification(false)
+        updateNotification()
 
         if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PermissionChecker.PERMISSION_GRANTED) {
@@ -180,7 +180,7 @@ class GpsServices : Service(), LocationListenerCompat {
         mData.accuracy = if (location.hasAccuracy()) location.accuracy else -1.0f
         mData.altitude = if (location.hasAltitude()) location.altitude else 0.0
 
-        updateNotification(true)
+        updateNotification()
 
         sendMessage(Message.obtain(null, DATA_UPDATE, mData))
     }
@@ -231,29 +231,23 @@ class GpsServices : Service(), LocationListenerCompat {
 
     fun createNotificationChannel() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            var channelBuilder = NotificationChannelCompat.Builder("kotori", NotificationManagerCompat.IMPORTANCE_DEFAULT)
+            val channel = NotificationChannelCompat.Builder("kotori", NotificationManagerCompat.IMPORTANCE_DEFAULT)
                 .setName("Kotori")
                 .setDescription("Kotori Notification")
+                .build()
 
-            val notificationChannel = channelBuilder.build()
-            NotificationManagerCompat.from(applicationContext).createNotificationChannel(notificationChannel)
+            NotificationManagerCompat.from(applicationContext).createNotificationChannel(channel)
         }
     }
 
-    fun updateNotification(hasData: Boolean) {
-        var notificationBuilder = NotificationCompat.Builder(this, "Kotori")
+    fun updateNotification() {
+        val notification = NotificationCompat.Builder(this, "kotori")
             .setContentTitle(getString(R.string.running))
+            .setContentText(getString(R.string.notification, mData.currentSpeed, mData.distance))
             .setSmallIcon(R.drawable.ic_notification)
             .setContentIntent(mContentIntent)
+            .build()
 
-        if (hasData) {
-            notificationBuilder.setContentText(getString(R.string.notification, mData.currentSpeed, mData.distance))
-        }
-        else {
-            notificationBuilder.setContentText(getString(R.string.notification, 0.0f, 0.0f))
-        }
-
-        val notification = notificationBuilder.build()
         startForeground(R.string.noti_id, notification)
     }
 

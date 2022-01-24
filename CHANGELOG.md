@@ -1,3 +1,20 @@
+## Kotori 4.0.0
+
+- Port code base to kotlin
+- Use android ktx location
+- Update application logic
+- Night theme is darker
+- Change app theme from preferences
+- Add spanish traslation
+- Display current speed in notification instead of max speed
+- Add Exit option
+- Portrait support
+- Change status and navigation bar colors
+- Remove Gson dependency
+- Update dependencies
+- Compile sdk version is 31
+- Fix: average speed
+
 ## Kotori 3.1.0
 
 - Show location altitude

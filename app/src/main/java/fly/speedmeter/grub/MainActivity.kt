@@ -287,7 +287,7 @@ class MainActivity : AppCompatActivity() {
         // convert from m/s to km/h
         var spd = speed * 3.6f
         var maxSpd = maxSpeed * 3.6f
-        var avgSpd = averageSpeed * 3.6f
+        var avgSpd = averageSpeed
 
         val units = if (mSharedPreferences.getBoolean("imperial", false)) {
             spd *= 0.62137119f

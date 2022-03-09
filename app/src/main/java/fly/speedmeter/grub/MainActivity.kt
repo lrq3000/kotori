@@ -140,6 +140,8 @@ class MainActivity : AppCompatActivity() {
             "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
 
+        window.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         checkLocationPermission()
     }
 

@@ -117,15 +117,14 @@ class GpsServices : Service(), LocationListenerCompat {
 
     override fun onProviderDisabled(@NonNull provider: String) {
         if (mData.isRunning) {
-            mData = mData.copy(
-                isRunning = false,
-                isFirstTime = true,
-                accuracy = 0.0f,
-                satellitesUsed = 0,
-                satellites = 0
-            )
             mTimer.cancel()
         }
+
+        mData.isRunning = false
+        mData.isFirstTime = true
+        mData.accuracy = 0.0f
+        mData.satellitesUsed = 0
+
         Toast.makeText(applicationContext, R.string.gps_disabled, Toast.LENGTH_SHORT).show()
         sendMessage(Message.obtain(null, DATA_UPDATE, mData))
         sendMessage(Message.obtain(null, GPS_DISABLED))

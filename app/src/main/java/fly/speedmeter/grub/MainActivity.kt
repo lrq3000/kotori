@@ -227,7 +227,6 @@ class MainActivity : AppCompatActivity() {
     fun handleMessage(msg: Message) {
         when (msg.what) {
             DATA_UPDATE -> handleDataUpdate(msg.obj as PositioningData)
-            GPS_DISABLED -> showLocationDisabledDialog()
         }
     }
 

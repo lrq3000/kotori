@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
+import android.location.OnNmeaMessageListener
 import android.Manifest
 import android.os.Bundle
 import android.os.IBinder
@@ -95,6 +96,12 @@ class GpsServices : Service(), LocationListenerCompat {
             ContextCompat.getMainExecutor(this),
             mGnssCallback
         )
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            mLocationManager.addNmeaListener(ContextCompat.getMainExecutor(this), {
+                message, _ -> onNmeaMessage(message)
+            })
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -182,6 +189,32 @@ class GpsServices : Service(), LocationListenerCompat {
         updateNotification()
 
         sendMessage(Message.obtain(null, DATA_UPDATE, mData))
+    }
+
+    fun onNmeaMessage(message: String) {
+        val ALTITUDE_INDEX = 9
+        val tokens = message.split(",")
+
+        if (message.startsWith("\$GPGGA") || message.startsWith("\$GNGNS") || message.startsWith("\$GNGGA")) {
+            val altitude: String?
+
+            try {
+                altitude = tokens[ALTITUDE_INDEX]
+            }
+            catch (e: ArrayIndexOutOfBoundsException) {
+                return
+            }
+
+            if (!altitude.isEmpty()) {
+                var altitudeValue = 0.0
+                try {
+                    altitudeValue = altitude.toDouble()
+                }
+                catch (e: NumberFormatException) {
+                }
+                mData.altitudeMeanSeaLevel = altitudeValue
+            }
+        }
     }
 
     fun handleMessage(msg: Message) {

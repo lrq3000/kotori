@@ -10,6 +10,7 @@ data class PositioningData(
     var currentSpeed: Float = 0.0f,
     var maxSpeed: Float = 0.0f,
     var altitude: Double = 0.0,
+    var altitudeMeanSeaLevel: Double = 0.0,
     var satellitesUsed: Int = 0,
     var satellites: Int = 0
 )

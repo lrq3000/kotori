@@ -21,6 +21,8 @@
     <string name="pref_auto_average_summary">Le temps passé à l\'arrêt ne comptera pas dans la vitesse moyenne.</string>
     <string name="pref_miles_per_hour">Utiliser les unités impériales</string>
     <string name="pref_miles_per_hour_summary">Afficher les données en unités impériales au lieu du système métrique.</string>
+    <string name="pref_mean_sea_level">Utiliser le niveau moyen de la mer</string>
+    <string name="pref_mean_sea_level_summary">Altitude en MSL au lieu de WGS84. Les valeurs MSL dépendent de l'implémentation du fabricant.</string>
     
     <!-- app theme preference strings -->
     <string name="theme">Thème</string>

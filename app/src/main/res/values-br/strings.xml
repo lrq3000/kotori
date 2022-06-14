@@ -21,6 +21,8 @@
     <string name="pref_auto_average_summary">O tempo gasto na parada não conta na velocidade média.</string>
     <string name="pref_miles_per_hour">Usar unidades imperiais</string>
     <string name="pref_miles_per_hour_summary">Exibe dados em unidades imperiais em vez de sistema métrico.</string>
+    <string name="pref_mean_sea_level">Usar o nível médio do mar</string>
+    <string name="pref_mean_sea_level_summary">Altitude como MSL ao invés de WGS84. Os valores MSL dependem da implementação do fabricante.</string>
     
     <!-- app theme preference strings -->
     <string name="theme">Tema</string>

@@ -21,6 +21,8 @@
     <string name="pref_auto_average_summary">Hareketsiz zamanda geçen süre ortalama hıza katılmaz.</string>
     <string name="pref_miles_per_hour">İngiliz birimlerini kullan</string>
     <string name="pref_miles_per_hour_summary">Verileri metrik sistem yerine emperyal birimlerde görüntüleyin.</string>
+    <string name="pref_mean_sea_level">Ortalama deniz seviyesini kullanın</string>
+    <string name="pref_mean_sea_level_summary">WGS84 yerine MSL olarak yükseklik. MSL değerleri üreticinin uygulanmasına bağlıdır.</string>
     
     <!-- app theme preference strings -->
     <string name="theme">Tema</string>

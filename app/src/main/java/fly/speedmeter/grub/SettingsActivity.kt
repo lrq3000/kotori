@@ -29,6 +29,14 @@ class SettingsActivity : AppCompatActivity() {
             if (pref != null) {
                 pref.setSummary(BuildConfig.VERSION_NAME)
             }
+
+            var prefAltitudeUnits: Preference? = findPreference("altitude_msl")
+
+            if (prefAltitudeUnits != null) {
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N) {
+                    prefAltitudeUnits.setEnabled(false)
+                }
+            }
             
             themePref = findPreference("theme")
             themePref?.setSummary(themesArray[themeValuesArray.indexOf(currentTheme)])

@@ -21,6 +21,8 @@
     <string name="pref_auto_average_summary">Време проведено у стајању се не узима у обрачун просечне брзине.</string>
     <string name="pref_miles_per_hour">Користите империјалне јединице</string>
     <string name="pref_miles_per_hour_summary">Приказ података у империјалним јединицама уместо у метричком систему.</string>
+    <string name="pref_mean_sea_level">Употреба средњег нивоа мора</string>
+    <string name="pref_mean_sea_level_summary">Надморска висина као МСЛ уместо ВГС84. МСЛ вредности зависе од имплементације произвођача.</string>
     
     <!-- app theme preference strings -->
     <string name="theme">Тема</string>

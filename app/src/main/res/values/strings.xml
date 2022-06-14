@@ -24,6 +24,8 @@
     <string name="pref_auto_average_summary">The time spent at stop will not count in the average speed.</string>
     <string name="pref_miles_per_hour">Use imperial units</string>
     <string name="pref_miles_per_hour_summary">Display data in imperial units instead of metric system.</string>
+    <string name="pref_mean_sea_level">Use mean sea level</string>
+    <string name="pref_mean_sea_level_summary">Altitude as MSL instead of WGS84. MSL values depend on the implementation of the manufacturer.</string>
     
     <!-- app theme preference strings -->
     <string name="theme">Theme</string>

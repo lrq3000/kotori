@@ -9,14 +9,17 @@
     <SwitchPreferenceCompat
         android:key="auto_average"
         android:title="@string/pref_auto_average"
-        android:summary="@string/pref_auto_average_summary"
-        />
+        android:summary="@string/pref_auto_average_summary" />
 
     <SwitchPreferenceCompat
         android:key="imperial"
         android:title="@string/pref_miles_per_hour"
-        android:summary="@string/pref_miles_per_hour_summary"
-    />
+        android:summary="@string/pref_miles_per_hour_summary" />
+
+    <SwitchPreferenceCompat
+        android:key="altitude_msl"
+        android:title="@string/pref_mean_sea_level"
+        android:summary="@string/pref_mean_sea_level_summary" />
     
     <ListPreference
         android:key="theme"

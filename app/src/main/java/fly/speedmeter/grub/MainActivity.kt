@@ -232,12 +232,14 @@ class MainActivity : AppCompatActivity() {
 
     fun handleDataUpdate(data_: PositioningData) {
         isFirstFix = data_.isFirstTime
+        val altitudeMsl = mSharedPreferences.getBoolean("altitude_msl", false)
+
         handleRunningUpdate(data_.isRunning)
         handleTimeUpdate(data_.time)
         handleAccuracyUpdate(data_.accuracy)
         handleSatellitesUpdate(data_.satellitesUsed, data_.satellites)
         handleSpeedUpdate(data_.currentSpeed, data_.maxSpeed, calculateAverageSpeed(data_))
-        handleAltitudeUpdate(data_.altitude)
+        handleAltitudeUpdate(if (altitudeMsl) data_.altitudeMeanSeaLevel else data_.altitude)
         handleDistanceUpdate(data_.distance)
     }
 

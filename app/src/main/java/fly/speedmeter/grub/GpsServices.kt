@@ -171,7 +171,7 @@ class GpsServices : Service(), LocationListenerCompat {
 
             if (location.speed == 0.0f) {
                 if (lastTimeStopped != 0L) {
-                    mData.timeStopped = mData.time - lastTimeStopped
+                    mData.timeStopped += mData.time - lastTimeStopped
                 }
                 lastTimeStopped = mData.time
             }

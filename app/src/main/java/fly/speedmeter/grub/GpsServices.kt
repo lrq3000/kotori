@@ -4,6 +4,8 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.location.Location
 import android.location.LocationManager
 import android.location.OnNmeaMessageListener
@@ -27,10 +29,13 @@ import androidx.core.location.GnssStatusCompat
 import androidx.core.location.LocationListenerCompat
 import androidx.core.location.LocationManagerCompat
 import androidx.core.location.LocationRequestCompat
+import androidx.preference.PreferenceManager
 
 import kotlin.concurrent.timer
 
 import java.util.Timer
+
+import fly.speedmeter.grub.utils.*
 
 const val REGISTER = 0
 const val UNREGISTER = 1
@@ -39,7 +44,7 @@ const val RUNNING_UPDATE = 3
 const val RESET = 4
 const val GPS_DISABLED = 5
 
-class GpsServices : Service(), LocationListenerCompat {
+class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeListener {
 
     private val mGnssCallback = CustomGnssStatusCallback(this::handleSatelliteStatusChanged)
     private var mClient: Messenger? = null
@@ -64,16 +69,16 @@ class GpsServices : Service(), LocationListenerCompat {
     private var lastTimeStopped: Long = 0L
 
     private lateinit var mTimer: Timer
+    
+    private var useImperialUnits = false
+    
+    private lateinit var mPreferences: SharedPreferences
 
     override fun onCreate() {
         mContentIntent = Intent(this, MainActivity::class.java).let { intent ->
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             PendingIntent.getActivity(this, 0, intent, 0)
         }
-
-        createNotificationChannel()
-
-        updateNotification()
 
         if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PermissionChecker.PERMISSION_GRANTED) {
@@ -99,9 +104,19 @@ class GpsServices : Service(), LocationListenerCompat {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             mLocationManager.addNmeaListener({
-            	message, _ -> onNmeaMessage(message)
+                message, _ -> onNmeaMessage(message)
             }, null)
         }
+        
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        
+        useImperialUnits = mPreferences.getBoolean("imperial", false)
+        
+        mPreferences.registerOnSharedPreferenceChangeListener(this)
+        
+        createNotificationChannel()
+
+        updateNotification()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -118,6 +133,8 @@ class GpsServices : Service(), LocationListenerCompat {
             LocationManagerCompat.unregisterGnssStatusCallback(mLocationManager, mGnssCallback)
             LocationManagerCompat.removeUpdates(mLocationManager, this)
         }
+        
+        mPreferences.unregisterOnSharedPreferenceChangeListener(this)
 
         stopForeground(true)
     }
@@ -189,6 +206,13 @@ class GpsServices : Service(), LocationListenerCompat {
         updateNotification()
 
         sendMessage(Message.obtain(null, DATA_UPDATE, mData))
+    }
+    
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (key == "imperial") {
+            useImperialUnits = sharedPreferences.getBoolean(key, false)
+            updateNotification()
+        }
     }
 
     fun onNmeaMessage(message: String) {
@@ -272,10 +296,23 @@ class GpsServices : Service(), LocationListenerCompat {
         }
     }
 
-    fun updateNotification() {
+    fun updateNotification() {   
+        var speed = UnitConversion.metersPerSecondToKmPerHour(mData.currentSpeed)
+        var distance = mData.distance.toFloat()
+        
+        if (useImperialUnits) {
+            speed = UnitConversion.kmPerHourToMph(speed)
+            distance = UnitConversion.metersToFeet(distance)
+        }
+        
         val notification = NotificationCompat.Builder(this, "kotori")
             .setContentTitle(getString(R.string.running))
-            .setContentText(getString(R.string.notification, mData.currentSpeed, mData.distance))
+            .setContentText(getString(
+                                R.string.notification,
+                                speed,
+                                if (useImperialUnits) "mph" else "km/h",
+                                distance,
+                                if (useImperialUnits) "ft" else "m"))
             .setSmallIcon(R.drawable.ic_notification)
             .setContentIntent(mContentIntent)
             .build()

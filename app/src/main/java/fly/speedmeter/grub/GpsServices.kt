@@ -43,6 +43,7 @@ const val DATA_UPDATE = 2
 const val RUNNING_UPDATE = 3
 const val RESET = 4
 const val GPS_DISABLED = 5
+const val SHUTDOWN = 6
 
 class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeListener {
 
@@ -80,33 +81,7 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
             PendingIntent.getActivity(this, 0, intent, 0)
         }
 
-        if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PermissionChecker.PERMISSION_GRANTED) {
-            Toast.makeText(applicationContext, R.string.gps_disabled, Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        mLocationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-
-        LocationManagerCompat.requestLocationUpdates(
-            mLocationManager,
-            LocationManager.GPS_PROVIDER,
-            LocationRequestCompat.Builder(500).build(),
-            ContextCompat.getMainExecutor(this),
-            this
-        )
-
-        LocationManagerCompat.registerGnssStatusCallback(
-            mLocationManager,
-            ContextCompat.getMainExecutor(this),
-            mGnssCallback
-        )
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            mLocationManager.addNmeaListener({
-                message, _ -> onNmeaMessage(message)
-            }, null)
-        }
+        //setupLocationService()
         
         mPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         
@@ -116,7 +91,7 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
         
         createNotificationChannel()
 
-        updateNotification()
+        //updateNotification()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -127,17 +102,7 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
         return mMessenger.binder
     }
 
-    override fun onDestroy() {
-        if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PermissionChecker.PERMISSION_GRANTED) {
-            LocationManagerCompat.unregisterGnssStatusCallback(mLocationManager, mGnssCallback)
-            LocationManagerCompat.removeUpdates(mLocationManager, this)
-        }
-        
-        mPreferences.unregisterOnSharedPreferenceChangeListener(this)
-
-        stopForeground(true)
-    }
+    override fun onDestroy() { }
 
     override fun onProviderDisabled(@NonNull provider: String) {
         if (mData.isRunning) {
@@ -230,13 +195,12 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
             }
 
             if (!altitude.isEmpty()) {
-                var altitudeValue = 0.0
                 try {
-                    altitudeValue = altitude.toDouble()
+                    mData.altitudeMeanSeaLevel = altitude.toDouble()
                 }
                 catch (e: NumberFormatException) {
+                    mData.altitudeMeanSeaLevel = 0.0
                 }
-                mData.altitudeMeanSeaLevel = altitudeValue
             }
         }
     }
@@ -246,6 +210,8 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
             REGISTER -> {
                 mClient = msg.replyTo
                 sendMessage(Message.obtain(null, DATA_UPDATE, mData))
+                setupLocationService()
+                updateNotification()
             }
             UNREGISTER -> mClient = null
             RUNNING_UPDATE -> {
@@ -257,6 +223,7 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
                 }
             }
             RESET -> reset()
+            SHUTDOWN -> shutdown()
         }
     }
 
@@ -330,7 +297,51 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
         lastLongitude = 0.0
     }
 
+    // TODO: use lambda instead?
     fun setTime() {
         mData.time += 1
+    }
+    
+    fun shutdown() {
+        if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PermissionChecker.PERMISSION_GRANTED) {
+            LocationManagerCompat.unregisterGnssStatusCallback(mLocationManager, mGnssCallback)
+            LocationManagerCompat.removeUpdates(mLocationManager, this)
+        }
+        
+        mPreferences.unregisterOnSharedPreferenceChangeListener(this)
+
+        stopForeground(true)
+        stopSelf()
+    }
+    
+    fun setupLocationService() {
+        if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PermissionChecker.PERMISSION_GRANTED) {
+            Toast.makeText(applicationContext, R.string.gps_disabled, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        mLocationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+
+        LocationManagerCompat.requestLocationUpdates(
+            mLocationManager,
+            LocationManager.GPS_PROVIDER,
+            LocationRequestCompat.Builder(500).build(),
+            ContextCompat.getMainExecutor(this),
+            this
+        )
+
+        LocationManagerCompat.registerGnssStatusCallback(
+            mLocationManager,
+            ContextCompat.getMainExecutor(this),
+            mGnssCallback
+        )
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            mLocationManager.addNmeaListener({
+                message, _ -> onNmeaMessage(message)
+            }, null)
+        }
     }
 }

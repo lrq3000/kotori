@@ -9,7 +9,9 @@ class CustomHandler(callback: (msg: Message) -> Unit) : Handler(Looper.getMainLo
 
     override fun handleMessage(msg: Message) {
         when (msg.what) {
-            REGISTER, UNREGISTER, DATA_UPDATE, RUNNING_UPDATE, RESET, GPS_DISABLED -> mCallback.invoke(msg)
+            REGISTER, UNREGISTER, DATA_UPDATE, RUNNING_UPDATE, RESET,
+            GPS_DISABLED, SHUTDOWN -> mCallback.invoke(msg)
+            
             else -> super.handleMessage(msg)
         }
     }

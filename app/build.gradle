@@ -34,6 +34,14 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def flavor = variant.name
+            def versionName = variant.versionName
+            outputFileName = "${applicationId}_${flavor}_v${versionName}.apk"
+        }
+    }
 }
 
 dependencies {

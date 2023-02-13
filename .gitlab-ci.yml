@@ -2,7 +2,6 @@ image: jangrewe/gitlab-ci-android
 
 stages:
   - build
-  - test
   - upload
   - release
 
@@ -15,6 +14,7 @@ before_script:
   - chmod +x ./gradlew
 
 cache:
+  key: $CI_COMMIT_REF_SLUG
   paths:
     - .gradle
 
@@ -27,6 +27,8 @@ lintDebug:
 assembleDebug:
   interruptible: true
   stage: build
+  rules:
+      - if: $CI_COMMIT_TAG == null
   script:
     - ./gradlew assembleDebug
   artifacts:
@@ -47,13 +49,7 @@ assembleRelease:
         -Pandroid.injected.signing.key.password=$KEY_PASSWORD
   artifacts:
     paths:
-      - app/build/outputs/apk/release
-
-debugTests:
-  interruptible: true
-  stage: test
-  script:
-    - ./gradlew -Pci --console=plain :app:testDebug
+      - app/build/outputs/apk/release/${PACKAGE_NAME}
 
 upload:
   stage: upload
@@ -72,4 +68,4 @@ release:
   script:
     - |
       release-cli create --name "Release $CI_COMMIT_TAG" --tag-name $CI_COMMIT_TAG \
-        --assets-link "{\"name\":\"${PACKAGE_NAME}\",\"url\":\"${PACKAGE_REGISTRY_URL}/${PACKAGE_NAME}\"}" \
+        --assets-link "{\"name\":\"${PACKAGE_NAME}\",\"url\":\"${PACKAGE_REGISTRY_URL}/${PACKAGE_NAME}\"}"

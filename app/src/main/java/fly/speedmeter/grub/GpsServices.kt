@@ -311,6 +311,8 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
         
         mPreferences.unregisterOnSharedPreferenceChangeListener(this)
 
+        reset()
+
         stopForeground(true)
         stopSelf()
     }

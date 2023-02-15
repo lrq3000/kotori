@@ -1,0 +1,9 @@
+## Kotori 4.1.0
+
+- Keep screen on in main activity
+- Does not show dialog when location is disabled
+- Reset data when location provider is disabled
+- Add option to show altitude above mean sea level in android 7+
+- Show units in notification text
+- Fix remove location updates and notification when app is finished
+- Fix measure of stopping time (thanks to @w-rj)

@@ -1,4 +1,4 @@
-package fly.speedmeter.grub
+package dev.melonpan.kotori
 
 data class PositioningData(
     var isRunning: Boolean = false,

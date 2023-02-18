@@ -1,4 +1,4 @@
-package fly.speedmeter.grub
+package dev.melonpan.kotori
 
 import android.content.SharedPreferences
 import android.os.Bundle

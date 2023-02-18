@@ -1,4 +1,4 @@
-package fly.speedmeter.grub
+package dev.melonpan.kotori
 
 import android.app.PendingIntent
 import android.app.Service
@@ -35,7 +35,7 @@ import kotlin.concurrent.timer
 
 import java.util.Timer
 
-import fly.speedmeter.grub.utils.*
+import dev.melonpan.kotori.utils.UnitConversion
 
 const val REGISTER = 0
 const val UNREGISTER = 1

@@ -18,8 +18,6 @@ import android.os.SystemClock
 import android.os.RemoteException
 import android.widget.Toast
 
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationManagerCompat
@@ -104,7 +102,7 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
 
     override fun onDestroy() { }
 
-    override fun onProviderDisabled(@NonNull provider: String) {
+    override fun onProviderDisabled(provider: String) {
         if (mData.isRunning) {
             mTimer.cancel()
         }
@@ -119,7 +117,7 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
         sendMessage(Message.obtain(null, GPS_DISABLED))
     }
 
-    override fun onProviderEnabled(@NonNull provider: String) { }
+    override fun onProviderEnabled(provider: String) { }
 
     override fun onLocationChanged(location: Location) {
         if (mData.isRunning) {

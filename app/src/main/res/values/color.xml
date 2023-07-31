@@ -1,7 +1,6 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
     <color name="brown">#795548</color>
-    <color name="brown_light">#a98274</color>
     <color name="brown_dark">#4b2c20</color>
     <color name="yellow">#ffca28</color>
     <color name="yellow_light">#fffd61</color>
@@ -9,5 +8,4 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="gray">#1f1f1f</color>
-    <color name="gray_light">#464646</color>
 </resources>

@@ -23,7 +23,7 @@
     <string name="pref_miles_per_hour">Usar unidades imperiales</string>
     <string name="pref_miles_per_hour_summary">Mostrar datos en unidades imperiales en lugar del sistema metrico.</string>
     <string name="pref_mean_sea_level">Usar nivel del mar</string>
-    <string name="pref_mean_sea_level_summary">Valores como MSL en lugar de WGS84. Valores MSL dependen de la implementación del fabricante</string>
+    <string name="pref_mean_sea_level_summary">Valores como MSL en lugar de WGS84. Valores MSL dependen de la implementación del fabricante.</string>
     
     <!-- app theme preference strings -->
     <string name="theme">Tema</string>
@@ -35,7 +35,6 @@
     </string-array>
 
     <string name="license">Licencia</string>
-    <string name="donate">Cómprame un café ☕</string>
     <string name="source_code">Código fuente</string>
     <string name="source_code_summary">Acceder al código fuente.</string>
     <string name="version">Versión</string>

@@ -54,7 +54,7 @@
 
         <TextView
             android:id="@+id/distance"
-            android:drawableLeft="@drawable/baseline_navigation_24"
+            app:drawableLeftCompat="@drawable/baseline_navigation_24"
             android:text="@string/distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
 
         <TextView
             android:id="@+id/time"
-            android:drawableLeft="@drawable/baseline_timer_24"
+            app:drawableLeftCompat="@drawable/baseline_timer_24"
             android:text="@string/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

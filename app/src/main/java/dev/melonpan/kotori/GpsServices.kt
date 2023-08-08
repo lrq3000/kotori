@@ -10,6 +10,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.location.OnNmeaMessageListener
 import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.os.Message
@@ -76,7 +77,8 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
     override fun onCreate() {
         mContentIntent = Intent(this, MainActivity::class.java).let { intent ->
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+            val flag = if (Build.VERSION.SDK_INT >= 23) PendingIntent.FLAG_IMMUTABLE else 0
+            PendingIntent.getActivity(this, 0, intent, flag)
         }
 
         //setupLocationService()
@@ -251,7 +253,7 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
     }
 
     fun createNotificationChannel() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannelCompat.Builder("kotori", NotificationManagerCompat.IMPORTANCE_DEFAULT)
                 .setName("Kotori")
                 .setDescription("Kotori Notification")

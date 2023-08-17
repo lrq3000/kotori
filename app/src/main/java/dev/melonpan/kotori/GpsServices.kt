@@ -58,10 +58,6 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
 
     private var mLastLocation = Location("kotori_gps")
 
-    private var currentLongitude = 0.0
-
-    private var currentLatitude = 0.0
-
     private var lastLongitude = 0.0
 
     private var lastLatitude = 0.0
@@ -123,24 +119,23 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
 
     override fun onLocationChanged(location: Location) {
         if (mData.isRunning) {
-            currentLatitude = location.latitude
-            currentLongitude = location.longitude
 
             if (mData.isFirstTime) {
-                lastLatitude = currentLatitude
-                lastLongitude = currentLongitude
+                lastLatitude = location.latitude
+                lastLongitude = location.latitude
                 mData.isFirstTime = false
             }
 
             mLastLocation.latitude = lastLatitude
             mLastLocation.longitude = lastLongitude
+
             val distance = mLastLocation.distanceTo(location)
 
             if (location.accuracy < distance) {
                 mData.distance += distance
 
-                lastLatitude = currentLatitude
-                lastLongitude = currentLongitude
+                lastLatitude = location.latitude
+                lastLongitude = location.longitude
             }
         }
 
@@ -180,6 +175,7 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
         }
     }
 
+    //TODO: In API level 34 (UPSIDE_DOWN_CAKE), MSL altitude is exposed through Location.getMslAltitudeMeters().
     fun onNmeaMessage(message: String) {
         val ALTITUDE_INDEX = 9
         val tokens = message.split(",")
@@ -291,8 +287,6 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
         mData = PositioningData()
         mLastLocation = Location("kotori_gps")
         lastTimeStopped = 0L
-        currentLatitude = 0.0
-        currentLongitude = 0.0
         lastLatitude = 0.0
         lastLongitude = 0.0
     }

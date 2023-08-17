@@ -8,6 +8,8 @@ data class PositioningData(
     var distance: Double = 0.0,
     var isFirstTime: Boolean = true,
     var isRunning: Boolean = false,
+    var latitude: Double = 0.0,
+    var longitude: Double = 0.0,
     var maxSpeed: Float = 0.0f,
     var satellitesUsed: Int = 0,
     var satellites: Int = 0,

@@ -63,6 +63,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fabStart: FloatingActionButton
 
+    private lateinit var tvLocationData: TextView
+
     private var menuOptions: Menu? = null
 
     private lateinit var mToolbar: MaterialToolbar
@@ -132,6 +134,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(mToolbar)
 
         tvTime = findViewById(R.id.time)
+
+        tvLocationData = findViewById(R.id.location)
+        tvLocationData.text = "0.00°, 0.00°"
         
         val theme = mSharedPreferences.getString("theme", "system")
         
@@ -232,6 +237,9 @@ class MainActivity : AppCompatActivity() {
 
     fun handleDataUpdate(data_: PositioningData) {
         isFirstFix = data_.isFirstTime
+
+        tvLocationData.text = "%.2f°, %.2f°".format(data_.latitude, data_.longitude)
+
         val altitudeMsl = mSharedPreferences.getBoolean("altitude_msl", false)
 
         handleRunningUpdate(data_.isRunning)

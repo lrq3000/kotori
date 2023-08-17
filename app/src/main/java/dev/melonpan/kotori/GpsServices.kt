@@ -163,6 +163,9 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
         mData.accuracy = if (location.hasAccuracy()) location.accuracy else -1.0f
         mData.altitude = if (location.hasAltitude()) location.altitude else 0.0
 
+        mData.latitude = location.latitude
+        mData.longitude = location.longitude
+
         updateNotification()
 
         sendMessage(Message.obtain(null, DATA_UPDATE, mData))

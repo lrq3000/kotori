@@ -122,7 +122,7 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
 
             if (mData.isFirstTime) {
                 lastLatitude = location.latitude
-                lastLongitude = location.latitude
+                lastLongitude = location.longitude
                 mData.isFirstTime = false
             }
 

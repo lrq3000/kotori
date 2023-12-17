@@ -302,8 +302,10 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
     fun shutdown() {
         if (PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PermissionChecker.PERMISSION_GRANTED) {
-            LocationManagerCompat.unregisterGnssStatusCallback(mLocationManager, mGnssCallback)
-            LocationManagerCompat.removeUpdates(mLocationManager, this)
+            if (this::mLocationManager.isInitialized) {
+                LocationManagerCompat.unregisterGnssStatusCallback(mLocationManager, mGnssCallback)
+                LocationManagerCompat.removeUpdates(mLocationManager, this)
+            }
         }
         
         mPreferences.unregisterOnSharedPreferenceChangeListener(this)

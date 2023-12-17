@@ -312,7 +312,12 @@ class GpsServices : Service(), LocationListenerCompat, OnSharedPreferenceChangeL
 
         reset()
 
-        stopForeground(true)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            stopForeground(Service.STOP_FOREGROUND_REMOVE)
+        }
+        else {
+            stopForeground(true);
+        }
         stopSelf()
     }
     

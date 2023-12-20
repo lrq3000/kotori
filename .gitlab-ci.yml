@@ -4,11 +4,13 @@ include:
 variables:
   PACKAGE_NAME: "dev.melonpan.kotori_release_v${CI_COMMIT_TAG}.apk"
   PACKAGE_REGISTRY_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/kotori/${CI_COMMIT_TAG}"
+  GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
 
 cache:
   key: $CI_COMMIT_REF_SLUG
   paths:
-    - .gradle
+    - .gradle/caches
+    - .gradle/wrapper
 
 assembleDebug:
   rules:
@@ -34,6 +36,7 @@ upload:
   stage: deploy
   image: curlimages/curl:latest
   before_script: []
+  cache: []
   rules:
     - if: $CI_COMMIT_TAG
   script:
@@ -46,6 +49,7 @@ release:
   image: registry.gitlab.com/gitlab-org/release-cli:latest
   stage: deploy
   before_script: []
+  cache: []
   rules:
     - if: $CI_COMMIT_TAG
   needs: ["upload"]

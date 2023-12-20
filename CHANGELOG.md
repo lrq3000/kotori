@@ -1,3 +1,17 @@
+## Kotori 4.2
+
+- New: show latitude and longitude values
+- Fix: app crash if exit and location is disable after first launch
+- Fix: some lints warnings
+- Reduce average and maximum speed text size
+- Toolchain updates: update android and kotlin gradle plugins
+- Remove obsolete jcenter repo
+- Move code into new package name
+- Set compile and min sdk version to 33 to meet with play store requirements
+- Add coarse location permission, this is required in newer android versions
+- Remove old JVM args to compile with newer JDK versions
+- Minimal code cleanups
+
 ## Kotori 4.1.0
 
 - Keep screen on in main activity

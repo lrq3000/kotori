@@ -14,7 +14,11 @@ cache:
 
 assembleDebug:
   rules:
-      - if: $CI_COMMIT_TAG == null
+    - if: $CI_COMMIT_TAG == null
+
+debugTests:
+  rules:
+    - if: $CI_COMMIT_TAG == null
 
 assembleRelease:
   interruptible: true
